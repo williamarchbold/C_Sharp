@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+ * This program displays 5 menu options to the user. The user can pick amongst the menu options and calculate various values. 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +24,7 @@ namespace Project_1___Basic_Menu_Loop {
 
             while (selection != 5) {
 
+                //Start:
                 Console.Write("Please select one of the five following options: \n" + 
                 "1. Convert a fahrenheit value to celsius \n" +
                 "2. Calculate the volume of a sphere\n" +
@@ -41,6 +46,23 @@ namespace Project_1___Basic_Menu_Loop {
                     Console.WriteLine("\n");
                 }
 
+                /*if (int.TryParse(Console.ReadLine(), out selection))
+                {
+                    Console.WriteLine("You goofed");
+                    goto Start;
+                }
+                
+
+                try
+                {
+                   int userInput = int.Parse(Console.ReadLine());
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("You goofed");
+                }
+                */
+
                 switch (selection) {
                     case 1:
                         ConvertTemp();
@@ -60,12 +82,14 @@ namespace Project_1___Basic_Menu_Loop {
             }
         }
 
+
         static void ConvertTemp() {
             Console.Write("Please enter a value in Fahrenheit: ");
             double input = Convert.ToDouble(Console.ReadLine());
             double celsius = (input - 32.0) * (5.0 / 9.0);
             Console.WriteLine("\n{0} Fahrenheit is {1} Celsius\n", input, celsius);
         }
+
 
         static void SphereVolume() {
             Console.Write("Please enter the radius of a sphere: ");
@@ -108,9 +132,12 @@ namespace Project_1___Basic_Menu_Loop {
             Console.Write("\nPLease enter a string to see wehther the string is a palindrome: ");
             string input = Console.ReadLine();
 
-            //input.SequenceEqual(input.Reverse()) ? Console.WriteLine("Yes, that's a palindrome!") : Console.WriteLine("No, not a palindrome!");
 
-            bool palindrome = input.SequenceEqual(input.Reverse()); //https://stackoverflow.com/questions/9790749/check-if-a-string-is-a-palindrome
+            //Ternary operator to write string to console if input sequence is equal when reversed 
+            Console.WriteLine(input.SequenceEqual(input.Reverse()) ? "Yes, that's a palindrome!" : "No, not a palindrome!");
+
+            //alternate way to write check if palindrom and write to screen. many more lines of code. 
+            /*bool palindrome = input.SequenceEqual(input.Reverse()); 
 
             if (palindrome == true) {
                 Console.WriteLine("Yes, that's a palindrome!\n");
@@ -118,7 +145,7 @@ namespace Project_1___Basic_Menu_Loop {
             else {
                 Console.WriteLine("No, not a palindrome!\n");
             }
-
+            */
         }
     }
 }
