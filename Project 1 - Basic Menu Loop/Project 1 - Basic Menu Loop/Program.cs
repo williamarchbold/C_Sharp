@@ -87,7 +87,7 @@ namespace Project_1___Basic_Menu_Loop {
             Console.Write("Please enter a value in Fahrenheit: ");
             double input = Convert.ToDouble(Console.ReadLine());
             double celsius = (input - 32.0) * (5.0 / 9.0);
-            Console.WriteLine("\n{0} Fahrenheit is {1} Celsius\n", input, celsius);
+            Console.WriteLine("\n{0} Fahrenheit is {1,2:F} Celsius\n", input, celsius);
         }
 
 
@@ -102,7 +102,7 @@ namespace Project_1___Basic_Menu_Loop {
 
             double pi = Math.PI; //https://www.dotnetperls.com/pi
             double volume = (4.0 / 3.0) * pi * Math.Pow(input, 3);  //https://www.dotnetperls.com/math-pow
-            Console.WriteLine("\nSphere Area: {0}\n", volume);
+            Console.WriteLine("\nSphere Area: {0,2:F}\n", volume);
         }
 
         static void Multiples() {
