@@ -2,32 +2,29 @@
 
 namespace Project_2___OOP_Character_Battle {
 
-    public class Character {
+    public abstract class Character {
 
-        private int moveSpeed;
-        private int damagePerAttack;
-        private int health;
-        private int position;
-        private int priority;
-        private int attackRange;
+        protected int moveSpeed;    //made protected so that child class can inherent but no one else can
+        protected int damagePerAttack;
+        protected int health;
+        public int position;
+        public int priority;
+        protected int attackRange;
 
-        public void TakeDamage(int amount);
-
-        public string GetMovementDescription() {
-            return ToString("Movespeed: {0} Attack Range: {1}  Damage: {2}", moveSpeed, attackRange, damagePerAttack);
+        public void TakeDamage(int amount) {
         }
 
-        abstract string GetSpecialDescription() {
-            return ToString("Special attack description: ");
+        public string GetMovementDescription() {
+            return "Movespeed: " + moveSpeed + "Attack Range: " + attackRange + " Damage: " + damagePerAttack;
         }
 
         public string Attack() {
             return "Attack was: ";
         }
 
-        abstract string Special(Character target) {
-            return "Here's what happened...";
-        }
+        public abstract string Special(Character target);
+
+        public abstract string GetSpecialDescription();
 
 
 
