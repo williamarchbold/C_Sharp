@@ -15,6 +15,8 @@ namespace Project_2___OOP_Character_Battle
             this.health = 75;
             this.priority = 3;
             this.attackRange = 1;
+            this.characterType = "WARRIOR";
+            this.damagePerSpecialAttack = 30;
         }
 
         public override string Special(Character target)
@@ -24,7 +26,7 @@ namespace Project_2___OOP_Character_Battle
 
         public override string GetSpecialDescription()
         {
-            return "leap up to 8 units to the spot in front of the opponent if possible, if opponent is greater than 5 units away deal 30 damage";
+            return "leap up to 8 units to the spot in front of the opponent if possible, if opponent is less than 5 units away deal 30 damage";
         }
     }
 }

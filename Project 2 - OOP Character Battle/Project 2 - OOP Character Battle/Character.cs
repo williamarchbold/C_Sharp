@@ -4,12 +4,15 @@ namespace Project_2___OOP_Character_Battle {
 
     public abstract class Character {
 
-        protected int moveSpeed;    //made protected so that child class can inherent but no one else can
-        protected int damagePerAttack;
-        protected int health;
+        public int moveSpeed;    
+        public int damagePerAttack; //made protected so that child class can inherent but no one else can
+        public int health;
         public int position;
         public int priority;
-        protected int attackRange;
+        public int attackRange;
+        public string characterType;
+        public int attackSpecialRange;
+        public int damagePerSpecialAttack;
 
         public void TakeDamage(int amount) {
         }
@@ -25,9 +28,5 @@ namespace Project_2___OOP_Character_Battle {
         public abstract string Special(Character target);
 
         public abstract string GetSpecialDescription();
-
-
-
-
     }
 }

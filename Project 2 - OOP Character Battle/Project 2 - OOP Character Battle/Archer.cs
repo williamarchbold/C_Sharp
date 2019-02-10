@@ -15,6 +15,9 @@ namespace Project_2___OOP_Character_Battle
             this.health = 65;
             this.priority = 3;
             this.attackRange = 3;
+            this.characterType = "ARCHER";
+            this.attackSpecialRange = 12;
+            this.damagePerSpecialAttack = 10;
         }
 
         public override string Special(Character target)

@@ -14,6 +14,8 @@ namespace Project_2___OOP_Character_Battle {
             this.health = 50;
             this.priority = 2;
             this.attackRange = 6;
+            this.characterType = "MAGE";
+            this.attackSpecialRange = 9;
         }
 
         public override string Special(Character target) {
@@ -21,14 +23,7 @@ namespace Project_2___OOP_Character_Battle {
         }
 
         public override string GetSpecialDescription() {
-            return "knock back the opponent 4 units, range = 3, deals 3 damage";
+            return "knock back the opponent 4 units, range += 3, deals 3 damage";
         }
-
-
-
-    }
-
-
-    }
-       
+    }   
 }
