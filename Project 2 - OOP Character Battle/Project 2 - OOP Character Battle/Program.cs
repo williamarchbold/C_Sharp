@@ -123,7 +123,7 @@ namespace Project_2___OOP_Character_Battle
 
             for (; ; )
             {
-                Console.Write("1. Move & Attack ({0}) \n2. Special ({1})\nPlayer {2} enter 1 or 2 for your move: ", attacker.GetMovementDescription, attacker.GetSpecialDescription, whichPlayer);
+                Console.Write("1. Move & Attack ({0}) \n2. Special ({1})\nPlayer {2} enter 1 or 2 for your move: ", attacker.GetMovementDescription(), attacker.GetSpecialDescription(), whichPlayer);
                 int answer = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("\n");
                 switch (answer)
