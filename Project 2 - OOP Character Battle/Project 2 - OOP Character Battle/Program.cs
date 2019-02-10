@@ -33,18 +33,19 @@ namespace Project_2___OOP_Character_Battle
 
             printBoard(player1.position, player2.position);
 
-            MOVE move = turnMenu(turn);
-
+            if (turn == 1) {
+                MOVE move = turnMenu(turn);
+            }
             for (; ; )
             {
 
 
                 if (move == MOVE.MOVEANDATTACK && turn == 1) {
-                    player1.position = executeMove(player1);
+                    player1.position = executeMove(player1, player2);
                     player2.health = executeAttack(player1, player2);
                 }
                 else if (move == MOVE.MOVEANDATTACK && turn == 2) {
-                    player2.position = executeMove(player2);
+                    player2.position = executeMove(player2, player1);
                     player1.health = executeAttack(player2, player1);
                 }
                 else if (move == MOVE.SPECIAL && turn == 1) {
@@ -80,8 +81,9 @@ namespace Project_2___OOP_Character_Battle
             for (; ; )
             {
 
-                Console.WriteLine("Player {0} input integer 1-3 to select character: \n1. Warrior \n2. Mage \n3. Archer\n\n", playerOrder);
+                Console.Write("1. Warrior \n2. Mage \n3. Archer\nPlayer {0} input integer 1-3 to select character: ", playerOrder);
                 int player = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("\n");
                 switch (player)
                 {
                     case 1:
@@ -98,20 +100,17 @@ namespace Project_2___OOP_Character_Battle
 
         }
 
-        static void printBoard(int onePosition, int twoPosition)
-        {
-            for (int i = 1; i <= boardLength ; i++)
-            {
-                if (i == onePosition)
-                {
+        static void printBoard(int onePosition, int twoPosition) {
+
+            for (int i = 1; i <= boardLength ; i++) {
+
+                if (i == onePosition) {
                     Console.Write("1");
                 }
-                else if (i == twoPosition)
-                {
+                else if (i == twoPosition) {
                     Console.Write("2");
                 }
-                else
-                {
+                else {
                     Console.Write("-");
                 }
 
@@ -120,14 +119,13 @@ namespace Project_2___OOP_Character_Battle
         }
 
         enum MOVE {MOVEANDATTACK, SPECIAL }
-        static MOVE turnMenu(int whichPlayer)
-        {
+        static MOVE turnMenu(int whichPlayer, Character attacker) {
 
             for (; ; )
             {
-                Console.WriteLine("Player {0} enter 1 or 2 for your move: \n1. Move & Attack\n2. Special\n", whichPlayer);
-                Console.WriteLine(whichPlayer);
+                Console.Write("1. Move & Attack ({0}) \n2. Special ({1})\nPlayer {2} enter 1 or 2 for your move: ", attacker.GetMovementDescription, attacker.GetSpecialDescription, whichPlayer);
                 int answer = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("\n");
                 switch (answer)
                 {
                     case 1:
@@ -141,18 +139,30 @@ namespace Project_2___OOP_Character_Battle
             }
         }
 
-        static int executeMove(Character currentPLayer)
-        {
-            Console.Write("Enter negative integer for move left. Enter positive integer for move right: ");
+        static int executeMove(Character currentPLayer, Character defender) {
+
+            Console.Write("Enter move distance less than abs value {0}. \nEnter negative integer for move left. Enter positive integer for move right: ", currentPLayer.moveSpeed);
             int distance = Convert.ToInt32(Console.ReadLine());
-            while (distance > currentPLayer.moveSpeed)
-            {
-                Console.Write("Invalid move distance. Enter negative integer for move left. Enter positive integer for move right:");
+            //ask for valid move distance
+            while (Math.Abs(distance) > currentPLayer.moveSpeed) {
+                Console.Write("Invalid. Enter move distance less than abs value {0}. \nEnter negative integer for move left. Enter positive integer for move right:", currentPLayer.moveSpeed);
                 distance = Convert.ToInt32(Console.ReadLine());
             }
-            if (currentPLayer.position + distance > 0 && currentPLayer.position + distance <= 50)
-            {
-                currentPLayer.position = currentPLayer.position + distance;
+            //if movement stays within boundaries of the board
+            if (currentPLayer.position + distance > 0 && currentPLayer.position + distance <= 50) {
+
+                //if attacker is left of defender and movement plants attacker on defender's location, place attacker one spot left of defender
+                if (currentPLayer.position < defender.position && currentPLayer.position + distance == defender.position) {
+                    currentPLayer.position = defender.position - 1;
+                }
+                //if attacker is right of defender and movement plants attacker on defender's location, place attacker one spot right of defender
+                else if (currentPLayer.position > defender.position && currentPLayer.position + distance == defender.position) {
+                    currentPLayer.position = defender.position + 1;
+                }
+                //otherwise move current player desired distance
+                else {
+                    currentPLayer.position = currentPLayer.position + distance;
+                }   
             }
             Console.WriteLine("");
             return currentPLayer.position;
@@ -162,8 +172,8 @@ namespace Project_2___OOP_Character_Battle
 
             //check if attack is within range
             
-            if (attacker.attackRange > Math.Abs(attacker.position - defender.position)) {
-                printOutOfRange();
+            if (attacker.attackRange < Math.Abs(attacker.position - defender.position)) {
+                printOutOfRange("");
             }
             else {
                 defender.health = defender.health - attacker.damagePerAttack;
@@ -176,40 +186,51 @@ namespace Project_2___OOP_Character_Battle
 
         static void executeSpecialAttack(ref Character attacker, ref Character defender) {
  
-            switch (attacker.characterType)
-            {
+            switch (attacker.characterType) {
+
                 case "ARCHER":
-                    if (attacker.attackSpecialRange <= Math.Abs(attacker.position - defender.position)) {
-                        printOutOfRange();
+                    if (12 <= Math.Abs(attacker.position - defender.position)) {
+                        printOutOfRange("Must be within range of 12");
+                        printkAttackSuccess(attacker, defender, false);
                     }
                     else {
                         defender.health -= 10;
+                        printkAttackSuccess(attacker, defender, true);
                     }
                     break;
 
                 case "WARRIOR":
+                    //if within 8 spaces of defender
                     if (Math.Abs(attacker.position - defender.position) <= 8) {
+                        //if attacker is to the left of the defender leap right up to 1 spot left of defender
                         if (attacker.position < defender.position) {
                             attacker.position = defender.position - 1;
                         }
+                        //else attacker is to the right of the defender leap left up to 1 spot right of the defender
                         else {
                             attacker.position = defender.position + 1;
                         }
                         defender.health -= 30;
                         printkAttackSuccess(attacker, defender, true);
                     }
+                    //if outside of 8 spaces of defender
                     else {
+                        //attacker is left of defender
                         if (attacker.position < defender.position) {
                             attacker.position += 8;
                         }
+                        //attacker is right of defender
                         else {
                             attacker.position -= 8;
                         }
+                        //if attacker is within range of 5 after leap 
                         if (Math.Abs(attacker.position - defender.position) <= 5) {
                             defender.health -= 30;
                             printkAttackSuccess(attacker, defender, true);
                         }
+                        //if attacker is out of range of 5 after leap
                         else {
+                            printOutOfRange("Must be within range of 5.");
                             printkAttackSuccess(attacker, defender, false);
                         }
                     }
@@ -218,32 +239,46 @@ namespace Project_2___OOP_Character_Battle
                 case "MAGE":
 
                     //deal damage if within range
-                    if (Math.Abs(attacker.attackSpecialRange - defender.attackSpecialRange) < attacker.attackSpecialRange) {
-                        defender.health -= 3; 
+                    if (Math.Abs(attacker.position - defender.position) <= 3)
+                    {
+                        defender.health -= 3;
                         printkAttackSuccess(attacker, defender, true);
-                    }
-                    else {
-                        printkAttackSuccess(attacker, defender, false);
+
+                        //handle cases when attacker is to the left of the defender
+                        if (attacker.position < defender.position)
+                        {
+                            //if defender is nearly at right edge of board
+                            if (defender.position >= 46)
+                            {
+                                defender.position = 50;
+                            }
+                            //if not at edge of board push right 4 spaces
+                            else
+                            {
+                                defender.position += 4;
+                            }
+                        }
+                        //handle cases when attacker is to the right of the defender
+                        else
+                        {
+                            //if defender is nearly at left edge of board
+                            if (defender.position <= 4)
+                            {
+                                defender.position = 1;
+                            }
+                            else
+                            {
+                                defender.position -= 4;
+                            }
+                        }
+                        Console.WriteLine("Attacker pushed the defender back 4!");
                     }
 
-                    //move defender back at most 4 places
-                    if (attacker.position < defender.position) {
-                        if (defender.position >= 46) {
-                            defender.position = 50;
-                        }
-                        else {
-                            defender.position += 4;
-                        }
-                    }
+                    //if attacker out of range value 3 then attack fails
                     else {
-                        if (defender.position <= 4) {
-                            defender.position = 1;
-                        }
-                        else {
-                            defender.position -= 4;
-                        }
+                        Console.Write("Out of range! Special attack range = 3. ");
+                        printkAttackSuccess(attacker, defender, false);
                     }
-                    Console.WriteLine("Attacker pushed the defender back 4!");
                     break;
 
                 default:
@@ -274,8 +309,8 @@ namespace Project_2___OOP_Character_Battle
             }
         }
 
-        static void printOutOfRange() {
-            Console.WriteLine("Out of range!");
+        static void printOutOfRange(string classSpecialRange) {
+            Console.Write("Out of range! {0} ", classSpecialRange);
         }
 
         static Boolean isPlayerDefeated(Character player1, Character player2) {
