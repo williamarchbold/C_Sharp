@@ -45,6 +45,7 @@ namespace Project_2___OOP_Character_Battle
 
                 if (move == MOVE.MOVEANDATTACK && turn == 1) {
                     player1.position = executeMove(player1, player2);
+                    printBoard(player1.position, player2.position);
                     if (chooseToMove()) {
                         player2.health = executeAttack(player1, player2);
                     }
@@ -54,6 +55,7 @@ namespace Project_2___OOP_Character_Battle
                 }
                 else if (move == MOVE.MOVEANDATTACK && turn == 2) {
                     player2.position = executeMove(player2, player1);
+                    printBoard(player1.position, player2.position);
                     if (chooseToMove()) {
                         player1.health = executeAttack(player2, player1);
                     }
@@ -187,11 +189,11 @@ namespace Project_2___OOP_Character_Battle
             //check if attack is within range
             
             if (attacker.attackRange < Math.Abs(attacker.position - defender.position)) {
-                printOutOfRange("");
+                printOutOfRange("\n\n");
             }
             else {
                 defender.health = defender.health - attacker.damagePerAttack;
-                Console.WriteLine("Attack was successful! Defender's health is now {0}", defender.health);
+                Console.WriteLine("Attack was successful! Defender's health is now {0}\n", defender.health);
             }
             return defender.health;
         }
@@ -204,7 +206,7 @@ namespace Project_2___OOP_Character_Battle
 
                 case "ARCHER":
                     if (12 <= Math.Abs(attacker.position - defender.position)) {
-                        printOutOfRange("Must be within range of 12");
+                        printOutOfRange("Must be within range of 12\n");
                         printkAttackSuccess(attacker, defender, false);
                     }
                     else {
@@ -244,7 +246,7 @@ namespace Project_2___OOP_Character_Battle
                         }
                         //if attacker is out of range of 5 after leap
                         else {
-                            printOutOfRange("Must be within range of 5.");
+                            printOutOfRange("Must be within range of 5.\n");
                             printkAttackSuccess(attacker, defender, false);
                         }
                     }
@@ -285,12 +287,12 @@ namespace Project_2___OOP_Character_Battle
                                 defender.position -= 4;
                             }
                         }
-                        Console.WriteLine("Attacker pushed the defender back 4!");
+                        Console.WriteLine("Attacker pushed the defender back 4!\n");
                     }
 
                     //if attacker out of range value 3 then attack fails
                     else {
-                        Console.Write("Out of range! Special attack range = 3. ");
+                        Console.Write("Out of range! Special attack range = 3. \n");
                         printkAttackSuccess(attacker, defender, false);
                     }
                     break;
@@ -316,15 +318,15 @@ namespace Project_2___OOP_Character_Battle
 
             if (success == true)
             {
-                Console.WriteLine("Attacker's special move was successful! Defender's health is now {0}\n", defender.health);
+                Console.WriteLine("Attacker's special move was successful! Defender's health is now {0}\n\n", defender.health);
             }
             else{
-                Console.WriteLine("Attacker's special move unsuccessful! Defender's health is still {0}\n", defender.health);
+                Console.WriteLine("Attacker's special move unsuccessful! Defender's health is still {0}\n\n", defender.health);
             }
         }
 
         static void printOutOfRange(string classSpecialRange) {
-            Console.Write("Out of range! {0} ", classSpecialRange);
+            Console.Write("Out of range! {0} \n", classSpecialRange);
         }
 
         static Boolean isPlayerDefeated(Character player1, Character player2) {
