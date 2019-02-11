@@ -9,8 +9,7 @@ namespace Project_2___OOP_Character_Battle
     class Program
     {
         static readonly int boardLength = 50;
-        static void Main(string[] args)
-        {
+        static void Main(string[] args) {
             //Tile[] board = new Tile[50];
             var player1 = menu(1); //var = type inference
             var player2 = menu(2);
@@ -22,8 +21,7 @@ namespace Project_2___OOP_Character_Battle
             player2.position = 27;
 
             int turn = 1;
-            if (player2.priority < player1.priority)
-            {
+            if (player2.priority < player1.priority) {
                 turn = 2;
             }
             else if (player1.priority == player2.priority) {
@@ -32,21 +30,36 @@ namespace Project_2___OOP_Character_Battle
             }
 
             printBoard(player1.position, player2.position);
+            printHealth(player1.health, player2.health);
 
-            if (turn == 1) {
-                MOVE move = turnMenu(turn);
-            }
-            for (; ; )
-            {
+            MOVE move;
 
+            for (; ; ) {
+
+                if (turn == 1) {
+                    move = turnMenu(turn, player1);
+                }
+                else {
+                        move = turnMenu(turn, player2);
+                }
 
                 if (move == MOVE.MOVEANDATTACK && turn == 1) {
                     player1.position = executeMove(player1, player2);
-                    player2.health = executeAttack(player1, player2);
+                    if (chooseToMove()) {
+                        player2.health = executeAttack(player1, player2);
+                    }
+                    else {
+                        continue;
+                    }
                 }
                 else if (move == MOVE.MOVEANDATTACK && turn == 2) {
                     player2.position = executeMove(player2, player1);
-                    player1.health = executeAttack(player2, player1);
+                    if (chooseToMove()) {
+                        player1.health = executeAttack(player2, player1);
+                    }
+                    else {
+                        continue;
+                    }
                 }
                 else if (move == MOVE.SPECIAL && turn == 1) {
                     executeSpecialAttack(ref player1, ref player2);
@@ -57,6 +70,7 @@ namespace Project_2___OOP_Character_Battle
 
 
                 printBoard(player1.position, player2.position);
+                printHealth(player1.health, player2.health);
 
                 //check if a player is defeated
                 if (isPlayerDefeated(player1, player2)) {
@@ -64,12 +78,12 @@ namespace Project_2___OOP_Character_Battle
                 }
 
                 turn = switchPlayerControl(turn);
-
-                move = turnMenu(turn);
-
-
             }
-            
+               
+
+
+            Console.Write("Press any key to continue...");
+            Console.ReadKey();
 
 
         }
@@ -302,10 +316,10 @@ namespace Project_2___OOP_Character_Battle
 
             if (success == true)
             {
-                Console.WriteLine("Attacker's special move was successful! Defender's health is now {0}", defender.health);
+                Console.WriteLine("Attacker's special move was successful! Defender's health is now {0}\n", defender.health);
             }
             else{
-                Console.WriteLine("Attacker's special move unsuccessful! Defender's health is still {0}", defender.health);
+                Console.WriteLine("Attacker's special move unsuccessful! Defender's health is still {0}\n", defender.health);
             }
         }
 
@@ -328,7 +342,41 @@ namespace Project_2___OOP_Character_Battle
             }
 
         }
+
+        static void printHealth(int playerOneHealth, int playerTwoHealth) {
+            Console.WriteLine("Player 1 health: {0}         Player 2 health: {1}\n", playerOneHealth, playerTwoHealth);
+        }
+
+        static Boolean chooseToMove() {
+            Console.Write("Do you still want to attack? (y/n): ");
+            string answer = Console.ReadLine();
+            Console.WriteLine("");
+            /*
+            while (answer != "y" | answer!= "n") {
+                Console.Write("invalid input. Do you still want to attack? (y/n): ");
+                answer = Console.ReadLine();
+                Console.WriteLine("");
+            }
+            */
+
+            if (answer=="y") {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        static Boolean playAgain()
+        {
+            Console.Write("Would you like to play again? (y/n): ");
+            string answer = Console.ReadLine();
+            if (answer == "y") {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     }
-
-
 }

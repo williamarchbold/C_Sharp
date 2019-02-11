@@ -18,7 +18,7 @@ namespace Project_2___OOP_Character_Battle {
         }
 
         public string GetMovementDescription() {
-            return "Movespeed: " + moveSpeed + "Attack Range: " + attackRange + " Damage: " + damagePerAttack;
+            return "Movespeed: " + moveSpeed + " Attack Range: " + attackRange + " Damage: " + damagePerAttack;
         }
 
         public string Attack() {
