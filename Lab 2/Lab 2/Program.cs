@@ -30,6 +30,7 @@ namespace Lab_2
             foreach (DirectoryInfo directory in new DirectoryInfo(path).GetDirectories())
             {
                 findFile(path + "\\" + directory);
+                //path = findFile(path + "\\" + directory); tried this because i didn't do anything with the result of findFIle(), but VisualStudio didn't like it
 
                 foreach (FileInfo file in new DirectoryInfo(directory.FullName).GetFiles())
                 {
