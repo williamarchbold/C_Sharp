@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project 3 IO and Recursion", "Project 3 IO and Recursion\Project 3 IO and Recursion.csproj", "{7388FFEA-3D5C-45A2-AC14-64FCDD5EEEDA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7388FFEA-3D5C-45A2-AC14-64FCDD5EEEDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7388FFEA-3D5C-45A2-AC14-64FCDD5EEEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7388FFEA-3D5C-45A2-AC14-64FCDD5EEEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7388FFEA-3D5C-45A2-AC14-64FCDD5EEEDA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5FC575C0-AB5C-4FE6-A98B-DFA6709EE572}
+	EndGlobalSection
+EndGlobal
