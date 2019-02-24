@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0AE5E35A-635B-490F-9C43-DBFE5BFE530C}</ProjectGuid>
+    <ProjectGuid>{68948DE8-B514-4A9E-B34E-5DDC0F7B55D2}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Lab_2</RootNamespace>
-    <AssemblyName>Lab 2</AssemblyName>
+    <RootNamespace>Project_4_Generics</RootNamespace>
+    <AssemblyName>Project 4 Generics</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Project_4_Generics.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -42,8 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FindFile.cs" />
+    <Compile Include="All.cs" />
+    <Compile Include="Audio.cs" />
+    <Compile Include="IFileLibrary.cs" />
+    <Compile Include="Image.cs" />
+    <Compile Include="Media.cs" />
+    <Compile Include="Library.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Video.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
