@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project_4_Generics
 {
-    interface IFileLibrary
+    interface IFileLibrary //use an interface because C# doesn't allow inheritence from multiple classes
     {
         void HaveFile(string fileName, DateTime lastAccessed, string fileType);
     }
