@@ -6,10 +6,24 @@ using System.Text;
 using System.Threading.Tasks;
 
 
+
+
+
 namespace Project_5_LINQ_and_Lambda
 {
+
+
+    /*
+     * <p> Given a database of movies from the IMDB-Movie-Data.txt file (I originally downloaded a .xsl file, but needed the data seperated by tabs
+     * which can only be done apparently in a .txt file), display the movies from the year 2010 only on the command line and the total number of movies
+     * from 2010. This problem must first be solved using dictionary techniques and then with using LINQ and LAMBDA. </p>
+     * 
+     */
+
+
     class Program
     {
+
         static void Main(string[] args)
         {
 
@@ -38,7 +52,7 @@ namespace Project_5_LINQ_and_Lambda
 
 
                 }
-                Console.WriteLine("Presenting movie titles for year 2010");
+                Console.WriteLine("Presenting movie titles for year 2010 using dictionaries");
 
                 IEnumerable<Dictionary<string, string>> answers = getData(media, "2010");
 
@@ -55,7 +69,7 @@ namespace Project_5_LINQ_and_Lambda
 
                 }
 
-                Console.WriteLine("{0} System pause..", j);
+                Console.WriteLine("\n\n\nNow solving using Linq...");
 
 
                 IEnumerable<Dictionary<string, string>> answerLinq = getDataLinq(media, "2010");
@@ -72,7 +86,8 @@ namespace Project_5_LINQ_and_Lambda
                 }
 
 
-                Console.WriteLine("{0} {1} System pause..", k, j);
+                Console.WriteLine("Method getData returned {0} movies and Method" + 
+                    " getDataLinq returned {1} movies.\nSystem pause..", k, j);
                 Console.ReadLine();
 
 
