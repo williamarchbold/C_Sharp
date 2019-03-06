@@ -340,7 +340,7 @@ namespace LINQProblems
             // create new directory info path then GetDirectories give an IEnumerable and then to use ForEach needed ToList
             // then for each directory form union on old path to new path when recursively calling method. Adding curly braces
             // makes it more clear not returning anything to ForEach
-            new DirectoryInfo(path).GetDirectories().ToList().ForEach(directory => { unions = unions.Union(GetAllPNGLambda(directory.FullName)); });
+            new DirectoryInfo(path).GetDirectories().ToList().ForEach(directory => { unions = unions.Union(GetAllPNG(directory.FullName)); });
 
             return unions.Union(new DirectoryInfo(path).GetFiles()).Where(file => file.Extension == ".png");
         }
