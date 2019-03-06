@@ -15,8 +15,8 @@ namespace LINQProblems
             GetStraightAStudents();
             DetermineWhichItemWasMostProfitable();
             QueryPhoneBookEntries();
-            //GetAllPNG(@"C:\Users\Ryan\Pictures\"); //NOTE: READ SUMMARY COMMENT ABOVE METHOD
-            GetAllPNG(@"C:\Users\William Archbold\Desktop\FolderTree");
+            GetAllPNG(@"C:\Users\Ryan\Pictures\"); //NOTE: READ SUMMARY COMMENT ABOVE METHOD
+            //GetAllPNG(@"C:\Users\William Archbold\Desktop\FolderTree");
             /*var files = GetAllPNGLambda(@"C:\Users\William Archbold\Desktop\FolderTree");
             foreach (var thing in files)
             {
@@ -32,9 +32,9 @@ namespace LINQProblems
             */
 
             SumPrimes();
-            Console.WriteLine("{0}", SumPrimesLambda());
-            Console.WriteLine("");
-            Console.ReadLine();
+            //Console.WriteLine("{0}", SumPrimesLambda());
+            //Console.WriteLine("");
+            //Console.ReadLine();
 
         }
 
