@@ -68,7 +68,7 @@ namespace LINQProblems
         }
         */
 
-        public static IEnumerable<string> FindStringsInAThatArentInB()
+        public static List<string>/*IEnumerable<string>*/ FindStringsInAThatArentInB()
         {
             List<string> a = new List<string>() { "r", "y", "a", "n" };
             List<string> b = new List<string>() { "d", "a", "r", "r", "a", "s" };
@@ -82,7 +82,7 @@ namespace LINQProblems
             {
                 Console.Write("{0}, ", letter);
             }
-            return result;
+            return result.ToList();
         }
 
 
@@ -123,7 +123,7 @@ namespace LINQProblems
         }
         */
 
-        public static IEnumerable<Student> GetStraightAStudents()
+        public static List<Student>/*IEnumerable<Student>*/ GetStraightAStudents()
         {
             List<Student> students = new List<Student>()
             {
@@ -146,7 +146,7 @@ namespace LINQProblems
                 Console.Write("{0}, ", a.StudentID);
             }
 
-            return a_students;
+            return a_students.ToList();
 
         }
 
@@ -332,7 +332,7 @@ namespace LINQProblems
         }
         */
 
-        public static IEnumerable<FileInfo> GetAllPNG(string path)
+        public static List<FileInfo>/*IEnumerable<FileInfo>*/ GetAllPNG(string path)
         {
             IEnumerable<FileInfo> unions = new List<FileInfo>();
 
@@ -342,7 +342,7 @@ namespace LINQProblems
             // makes it more clear not returning anything to ForEach
             new DirectoryInfo(path).GetDirectories().ToList().ForEach(directory => { unions = unions.Union(GetAllPNG(directory.FullName)); });
 
-            return unions.Union(new DirectoryInfo(path).GetFiles()).Where(file => file.Extension == ".png");
+            return unions.Union(new DirectoryInfo(path).GetFiles()).Where(file => file.Extension == ".png").ToList();
         }
 
         /// <summary>
@@ -372,7 +372,10 @@ namespace LINQProblems
         }
         */
 
-        public static IEnumerable<int> GetFibonacciNumbers()
+        /*
+         * I used https://www.c-sharpcorner.com/code/1568/fibonacci-series-using-linq-in-c-sharp.aspx as the basis for the answer but made modifications
+         */
+        public static List<int>/*IEnumerable<int>*/ GetFibonacciNumbers()
         {
             int first = 0, second = 1;
             return Enumerable.Range(1, 40).Select(a =>
@@ -383,8 +386,8 @@ namespace LINQProblems
                 
                 return new { i = a, fib = first }; //this is returning an anonymous object that will return the iterator and the fib value at index a
 
-            }).Where(x => (x.i - 1) % 5 == 0).Select(x => x.fib); //srtip off index number from anonymous type and return just the fib value, but only 
-            //where the fib index is divisible by 6
+            }).Where(x => (x.i - 1) % 5 == 0).Select(x => x.fib).ToList(); //srtip off index number from anonymous type and return just the fib value, but only 
+            //where the fib index is divisible by 6. Lastly convert to list to accomodate test
 
         }
 
