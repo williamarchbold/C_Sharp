@@ -58,8 +58,10 @@ namespace Midterm
                         
                         break;
                         */
-
-                        exclusions = machine.Where(VendingMachineOption => VendingMachineOption.GetType == Food.Where(Food.CalorieCount > 100)|| Drink ).ToList(); 
+                        exclusions = 
+                            from o in machine
+                            group o by (o is Food && (o as Food).CalorieCount > 100 || o is Drink 
+                        
                         machine.PrintVendingMachine(exclusions);
 
 
