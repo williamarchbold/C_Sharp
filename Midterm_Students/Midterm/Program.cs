@@ -59,7 +59,7 @@ namespace Midterm
                         break;
                         */
 
-                        exclusions = machine.Where(VendingMachineOption => VendingMachineOption.GetType == Food || Drink ).ToList(); 
+                        exclusions = machine.Where(VendingMachineOption => VendingMachineOption.GetType == Food.Where(Food.CalorieCount > 100)|| Drink ).ToList(); 
                         machine.PrintVendingMachine(exclusions);
 
 
@@ -81,10 +81,10 @@ namespace Midterm
                         
                         break;
                         */
-                        exclusions = machine.Where(t => t.GetType == NonElectronic || Electronic);
-                        exclusions = machine[]
-                        Enumerable.Where()
-                        machine.PrintVendingMachine(exclusions);
+                        exclusions = machine.Where(t => t.GetType == NonElectronic.Where(x => x.AgeRequirement >= 7) || Electronic.Where(y => y.AgeRequirement >= 7).ToString();
+                        
+                        //Enumerable.Where()
+                        //machine.PrintVendingMachine(exclusions);
                     case 4:
                         Console.WriteLine("Thankyou for using this program!");
                         Console.ReadKey();
