@@ -14,23 +14,34 @@ namespace Midterm
             VendingMachine machine = new VendingMachine();
             do
             {
+                Start:
                 Console.WriteLine("Please enter an integer for the option you want to select:");
                 Console.WriteLine("1. Print vending machine.");
                 Console.WriteLine("2. List only healthy food and drink.");
                 Console.WriteLine("3. List toy options for kids under 7.");
                 Console.WriteLine("4. Exit Program");
 
-                menuSelection = int.Parse(Console.ReadLine());
+                try
+                {
+                    menuSelection = int.Parse(Console.ReadLine());
+                }
+                catch (Exception e)
+                {
 
-                List<object> exclusions = new List<object>();
+                    Console.WriteLine("You have an invalid character input. Try again.");
+                    goto Start;
+                }
+                
+
+                List<VendingMachineOption> exclusions = new List<VendingMachineOption>();
 
                 switch (menuSelection)
                 {
                     case 1:
-                        machine.PrintVendingMachine(new List<object>());
+                        machine.PrintVendingMachine(new List<VendingMachineOption>());
                         break;
                     case 2:
-                        foreach(var o in machine)
+                        /*foreach(VendingMachineOption o in machine)
                         {
                             if (o is Food || o is Drink)
                             {
@@ -44,10 +55,16 @@ namespace Midterm
                                 exclusions.Add(o);
                             }
                         }
-                        machine.PrintVendingMachine(exclusions);
+                        
                         break;
+                        */
+
+                        exclusions = machine.Where(VendingMachineOption => VendingMachineOption.GetType == Food || Drink ).ToList(); 
+                        machine.PrintVendingMachine(exclusions);
+
+
                     case 3:
-                        foreach (var o in machine)
+                        /*foreach (VendingMachineOption o in machine)
                         {
                             if (o is NonElectronic || o is Electronic)
                             {
@@ -61,8 +78,13 @@ namespace Midterm
                                 exclusions.Add(o);
                             }
                         }
-                        machine.PrintVendingMachine(exclusions);
+                        
                         break;
+                        */
+                        exclusions = machine.Where(t => t.GetType == NonElectronic || Electronic);
+                        exclusions = machine[]
+                        Enumerable.Where()
+                        machine.PrintVendingMachine(exclusions);
                     case 4:
                         Console.WriteLine("Thankyou for using this program!");
                         Console.ReadKey();

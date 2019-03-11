@@ -19,7 +19,8 @@ namespace Midterm
             Quantity = quantity;
         }
 
-        public override string ToString()
+        //public virtual string ToString()
+        public abstract string ToString()
         {
             return Name;
         }

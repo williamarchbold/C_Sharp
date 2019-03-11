@@ -6,28 +6,21 @@ using System.Threading.Tasks;
 
 namespace Midterm
 {
-    class Drink
+    class Drink : Consumable
     {
         public int SizeInOunces { get; private set; }
-        public string Name { get; private set; }
-        public float Price { get; private set; }
-        public int Quantity { get; private set; }
-        public int CalorieCount { get; private set; }
-        public bool IsVegetarian { get; private set; }
 
         public Drink(string name, float price, int quantity, int calorieCount, int sizeInOunces, bool isVegetarian)
+            : base (name, price, quantity, calorieCount, isVegetarian)
         {
-            Name = name;
-            Price = price;
-            Quantity = quantity;
+
             SizeInOunces = sizeInOunces;
-            CalorieCount = calorieCount;
-            IsVegetarian = isVegetarian;
         }
 
         public override string ToString()
         {
-            return Name;
+            return base.Name;
         }
+        
     }
 }

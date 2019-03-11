@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Midterm
 {
-    class VendingMachine : IEnumerable
+    class VendingMachine : IEnumerable <VendingMachineOption>
     {
-        object[,] options = new object[5,4];
-
+        VendingMachineOption[,] options = new VendingMachineOption[5,4];
+                
         public VendingMachine()
         {
             options[0, 0] = new Food("Jalapeno Chips", 1.25f, 11, 280, 1, 5000, true);
@@ -40,7 +40,7 @@ namespace Midterm
             get { return options[x, y]; }
         }
 
-        public void PrintVendingMachine(List<object> exclusions)
+        public void PrintVendingMachine(List<VendingMachineOption> exclusions)
         {
             Console.WriteLine();
             Console.WriteLine("X        A              B              C              D       ");
@@ -76,6 +76,11 @@ namespace Midterm
         IEnumerator IEnumerable.GetEnumerator()
         {
             return options.GetEnumerator();
+        }
+
+        IEnumerator<VendingMachineOption> IEnumerable<VendingMachineOption>.GetEnumerator()
+        {
+            throw new NotImplementedException();
         }
     }
 }
