@@ -60,7 +60,7 @@ namespace Midterm
                         */
                         exclusions = 
                             from o in machine
-                            group o by (o is Food && (o as Food).CalorieCount > 100 || o is Drink 
+                            group o by (o is Food && (o as Food).CalorieCount > 100 || o is Drink && (o as Drink)?.CalorieCount > 100) into
                         
                         machine.PrintVendingMachine(exclusions);
 
