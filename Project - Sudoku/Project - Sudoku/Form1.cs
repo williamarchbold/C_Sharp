@@ -65,7 +65,7 @@ namespace Project___Sudoku
                         }
                         UpdateBoard(i, j, character.ToString(), true); //this updates the board in memory
 
-                        puzzle.Rows[i].Cells[j].Value = character.ToString(); //this updates the UI board
+                        puzzle.Rows[j].Cells[i].Value = character.ToString(); //this updates the UI board
                     }
 
 
@@ -89,24 +89,19 @@ namespace Project___Sudoku
 
             var rawValue = currentCell.EditedFormattedValue.ToString().Trim();
 
-            UpdateBoard(e.RowIndex, e.ColumnIndex, rawValue);
-
+            UpdateBoard(e.ColumnIndex, e.RowIndex, rawValue);
             
-            
-
-
-           
 
         }
 
-        private void UpdateBoard(int y, int x, string rawValue, bool isFixed = false)//last arugment is optional default false
+        private void UpdateBoard(int x, int y, string rawValue, bool isFixed = false)//last arugment is optional default false
         {
             var currentCell = puzzle.Rows[x].Cells[y];
 
             if (rawValue == string.Empty)
             {
                 currentCell.ErrorText = string.Empty;
-                board.ClearSquare(y, x);
+                board.ClearSquare(x, y);
             }
 
             if ((int.TryParse(rawValue, out var value) && value >= 1 && value <= 9))
@@ -115,18 +110,18 @@ namespace Project___Sudoku
                 
                 if (isFixed)
                 {
-                    board.SetFixedSquares(y, x, value);
+                    board.SetFixedSquares(x, y, value);
                 }
                 else
                 {
-                    board.SetSquare(y, x, value);
+                    board.SetSquare(x, y, value);
                 }
 
             }
             else
             {
                 currentCell.ErrorText = "!";
-                board.ClearSquare(y, x);
+                board.ClearSquare(x, y);
             }
             
 
@@ -145,7 +140,7 @@ namespace Project___Sudoku
                 {
                     for (int j = 0; j < 9; j++)
                     {
-                        puzzle[j, i].Value = solution[j, i];
+                        puzzle[i, j].Value = solution[i, j];
                     }
                 }
             }
