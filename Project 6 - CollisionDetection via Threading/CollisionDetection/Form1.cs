@@ -64,6 +64,7 @@ namespace CollisionDetection
             /* SWITCH THESE LINES OF CODE TO TEST THE DIFFERENT METHODS */
             //CollisionDetection();
             CollisionDetectionParallel();
+            //CollisionDetectionParallelOptimized();
             /**********************************************************************/
             DrawSquares(map);
 
@@ -97,6 +98,33 @@ namespace CollisionDetection
                     }
                 }
             }
+        }
+
+        public void CollisionDetectionParallelOptimized() //teacher's solution
+        {
+            //Reset the color of squares to black.
+            for (int i = 0; i < squares.Count; i++)
+                squares[i].Color = Color.Black;
+            List<Task> tasks = new List<Task>();
+            for (int i = 0; i < squares.Count; i+=20) //add by 20 sized chunks
+            {
+                int h = i;
+                tasks.Add(Task.Factory.StartNew(() =>
+                {
+                    for (int x = h; x < h + 20; x++)
+                    {
+                        for (int j = x+1; j < squares.Count; j++)
+                        {
+                            if (squares[x].IsCollidingWith(squares[j]))
+                            {
+                                squares[x].Color = Color.Red;
+                                squares[j].Color = Color.Red;
+                            }
+                        }
+                    }
+                }
+            }
+
         }
 
         /// <summary>
@@ -158,7 +186,7 @@ namespace CollisionDetection
                     for (int i = lower; i < upper; i++)
                     {
                         //for (int j = 0; j < squares.Count; j++)
-                        for (int j = 0; j < i; j++)
+                        for (int j = 0; j < i; j++)//check at j=i+1 to eliminate duplicates
                         {
                             if (squares[i] != squares[j] && squares[i].IsCollidingWith(squares[j]))
                             {
