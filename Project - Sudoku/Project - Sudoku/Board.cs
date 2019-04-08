@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Project___Sudoku
@@ -101,42 +101,46 @@ namespace Project___Sudoku
                 }
                 return count == 81;
             }
-            if (squareTypes[y,x] != SquareType.NONE)
-            {
-                int nextX = x;
-                int nextY = y + 1;
-                if (nextX == 9)
-                {
-                    nextX = x+ 1;
-                    nextY = 0;
-                }
-                Solve(nextX, nextY);
-            }
-            else
+
+            if (squareTypes[x,y] == SquareType.NONE)
             {
                 var candidates = CheckCandidates(x, y);
                 foreach (var candidate in candidates)
                 {
-                    board[y, x] = candidate;
-                    squareTypes[y, x] = SquareType.SET;
-                    int nextX = x;
-                    int nextY = y + 1;
+                    board[x, y] = candidate;
+                    squareTypes[x, y] = SquareType.SET;
+                    var nextX = x;
+                    var nextY = y + 1;
                     if (nextY == 9)
                     {
                         nextX = x + 1;
                         nextY = 0;
                     }
+
                     if (Solve(nextX, nextY))
                     {
                         return true;
                     }
                     else
                     {
-                        board[y, x] = 0;
-                        squareTypes[y, x] = SquareType.NONE;
+                        board[x,y] = 0;
+                        squareTypes[x,y] = SquareType.NONE;
                     }
 
                 }
+            }
+            else
+            {
+                var nextX = x;
+                var nextY = y + 1;
+
+                if (nextY == 9)
+                {
+                    nextX = x + 1;
+                    nextY = 0;
+                }
+                
+                return Solve(nextX, nextY);
             }
 
 
@@ -144,7 +148,6 @@ namespace Project___Sudoku
         }
 
         //IEnumerable because not interested in what's coming out of the list
-
         private IEnumerable<int> CheckCandidates(int x, int y)
         {
             
@@ -155,22 +158,22 @@ namespace Project___Sudoku
 
             for (int i = 0; i < 9; i++)
             {
-                if (squareTypes[y, i] != SquareType.NONE)
+                if (squareTypes[i, y] != SquareType.NONE)
                 {
-                    candidates.Remove(board[y, i]);
+                    candidates.Remove(board[i, y]);
                 }
             }
             for (int i = 0; i < 9; i++)
             {
-                if (squareTypes[i, x] != SquareType.NONE)
+                if (squareTypes[x, i] != SquareType.NONE)
                 {
-                    candidates.Remove(board[i, x]);
+                    candidates.Remove(board[x, i]);
                 }
             }
 
             for (int i = x - (x%3); i < x - (x%3)+3; i++)
             {
-                for (int j = y; j < y-(y%3)+3; j++)
+                for (int j = y - (y%3); j < y-(y%3)+3; j++)
                 {
                     if (squareTypes[i, j] != SquareType.NONE)
                     {
