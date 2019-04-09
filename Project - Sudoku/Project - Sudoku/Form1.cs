@@ -49,27 +49,8 @@ namespace Project___Sudoku
             {
                 var lines = File.ReadLines("examples.txt");
                 var firstPuzzle = lines.First(); //this should create an array of 81 characters
-
-                board = new Board();//start with a fresh board 
-
-                int count = 0;
-
-                for (int i = 0; i < 9; i++)
-                {
-                    for (int j = 0; j < 9; j++)
-                    {
-                        var character = firstPuzzle[count++];
-                        if (character == '.')
-                        {
-                            continue;
-                        }
-                        UpdateBoard(i, j, character.ToString(), true); //this updates the board in memory
-
-                        puzzle.Rows[i].Cells[j].Value = character.ToString(); //this updates the UI board
-                    }
-
-
-                }
+                SetCurrentBoard(Board.FromString(firstPuzzle, out var solution), solution);
+               
                 //board.ValidateRow(0);
 
             }
@@ -81,6 +62,21 @@ namespace Project___Sudoku
             
 
 
+        }
+
+        private void SetCurrentBoard(Board board, int [,] solution)
+        {
+            this.board = board;
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    var number = solution[j, i];
+
+                    puzzle[j, i].Value = number > 0 ? number.ToString() : string.Empty; //either set square value to number or empty string if value 0
+                    puzzle[j, i].ErrorText = string.Empty; //if the asterisk in a stop sign shows up, delete it
+                }
+            }
         }
 
         private void puzzle_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -167,6 +163,12 @@ namespace Project___Sudoku
             }
 
             ;
+        }
+
+        private void RandomNine_Click(object sender, EventArgs e)
+        {
+            SetCurrentBoard(Board.FromRandom(out var solution), solution);
+
         }
     }
 }

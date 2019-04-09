@@ -29,10 +29,11 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.RandomSolution = new System.Windows.Forms.Button();
+            this.CheckButton = new System.Windows.Forms.Button();
             this.newFileButton = new System.Windows.Forms.Button();
             this.puzzle = new System.Windows.Forms.DataGridView();
-            this.CheckButton = new System.Windows.Forms.Button();
-            this.RandomSolution = new System.Windows.Forms.Button();
+            this.RandomNine = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -48,6 +49,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.RandomNine);
             this.splitContainer1.Panel1.Controls.Add(this.RandomSolution);
             this.splitContainer1.Panel1.Controls.Add(this.CheckButton);
             this.splitContainer1.Panel1.Controls.Add(this.newFileButton);
@@ -59,9 +61,29 @@
             this.splitContainer1.SplitterDistance = 266;
             this.splitContainer1.TabIndex = 0;
             // 
+            // RandomSolution
+            // 
+            this.RandomSolution.Location = new System.Drawing.Point(108, 212);
+            this.RandomSolution.Name = "RandomSolution";
+            this.RandomSolution.Size = new System.Drawing.Size(99, 66);
+            this.RandomSolution.TabIndex = 2;
+            this.RandomSolution.Text = "Create Solution";
+            this.RandomSolution.UseVisualStyleBackColor = true;
+            this.RandomSolution.Click += new System.EventHandler(this.CreateSolution_Click);
+            // 
+            // CheckButton
+            // 
+            this.CheckButton.Location = new System.Drawing.Point(108, 124);
+            this.CheckButton.Name = "CheckButton";
+            this.CheckButton.Size = new System.Drawing.Size(99, 67);
+            this.CheckButton.TabIndex = 1;
+            this.CheckButton.Text = "Check Solution";
+            this.CheckButton.UseVisualStyleBackColor = true;
+            this.CheckButton.Click += new System.EventHandler(this.CheckButton_Click);
+            // 
             // newFileButton
             // 
-            this.newFileButton.Location = new System.Drawing.Point(108, 89);
+            this.newFileButton.Location = new System.Drawing.Point(108, 38);
             this.newFileButton.Name = "newFileButton";
             this.newFileButton.Size = new System.Drawing.Size(99, 64);
             this.newFileButton.TabIndex = 0;
@@ -92,25 +114,15 @@
             this.puzzle.TabIndex = 0;
             this.puzzle.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.puzzle_CellValidating);
             // 
-            // CheckButton
+            // RandomNine
             // 
-            this.CheckButton.Location = new System.Drawing.Point(108, 182);
-            this.CheckButton.Name = "CheckButton";
-            this.CheckButton.Size = new System.Drawing.Size(99, 67);
-            this.CheckButton.TabIndex = 1;
-            this.CheckButton.Text = "Check Solution";
-            this.CheckButton.UseVisualStyleBackColor = true;
-            this.CheckButton.Click += new System.EventHandler(this.CheckButton_Click);
-            // 
-            // RandomSolution
-            // 
-            this.RandomSolution.Location = new System.Drawing.Point(108, 280);
-            this.RandomSolution.Name = "RandomSolution";
-            this.RandomSolution.Size = new System.Drawing.Size(99, 66);
-            this.RandomSolution.TabIndex = 2;
-            this.RandomSolution.Text = "Create Solution";
-            this.RandomSolution.UseVisualStyleBackColor = true;
-            this.RandomSolution.Click += new System.EventHandler(this.CreateSolution_Click);
+            this.RandomNine.Location = new System.Drawing.Point(108, 307);
+            this.RandomNine.Name = "RandomNine";
+            this.RandomNine.Size = new System.Drawing.Size(99, 57);
+            this.RandomNine.TabIndex = 3;
+            this.RandomNine.Text = "Random Nine";
+            this.RandomNine.UseVisualStyleBackColor = true;
+            this.RandomNine.Click += new System.EventHandler(this.RandomNine_Click);
             // 
             // Form1
             // 
@@ -136,6 +148,7 @@
         private System.Windows.Forms.Button newFileButton;
         private System.Windows.Forms.Button CheckButton;
         private System.Windows.Forms.Button RandomSolution;
+        private System.Windows.Forms.Button RandomNine;
     }
 }
 

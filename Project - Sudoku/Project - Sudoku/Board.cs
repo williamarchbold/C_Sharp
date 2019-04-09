@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Project___Sudoku
@@ -12,12 +13,75 @@ namespace Project___Sudoku
         private SquareType[,] squareTypes = new SquareType[9, 9]; //this initializes a 2D array with each value set to NONE
 
 
+        public static Board FromRandom(out int [,]solution) //this is a factory method - static which will use object type
+        {
+            Random random = new Random();
+            var candidates = new List<int>
+            {
+                1, 2, 3, 4, 5, 6, 7, 8, 9
+            }.OrderBy(x => random.Next()).ToList();
+
+            Board scratchBoard = new Board();
+
+            foreach (var candidate in candidates)
+            {
+                var set = false;
+                while (!set)
+                {
+                    int x = random.Next(9);
+                    int y = random.Next(9);
+
+                    if (scratchBoard.board[x, y] == 0)
+                    {
+                        scratchBoard.SetFixedSquares(x, y, candidate);
+                        set = true;
+                    }
+                }
+                
+
+            }
+            solution = scratchBoard.board;
+            return scratchBoard;
+
+        }
+
+        public static Board FromString(string fileinput, out int[,] solution )
+        {
+            Board importedBoard = new Board();//start with a fresh board 
+
+            int count = 0;
+
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    var character = fileinput[count++];
+                    if (character == '.')
+                    {
+                        continue;
+                    }
+                    if ((int.TryParse(character.ToString(), out var value) && value >= 1 && value <= 9))
+                    {
+                        importedBoard.SetSquare(i, j, value); //this updates the board in memory
+                    }
+                    
+                }
+
+
+            }
+            solution = importedBoard.board;
+            return importedBoard;
+        }
+
+
         public void SetSquare(int x, int y, int number)
         {
             board[x, y] = number;
             squareTypes[x, y] = SquareType.SET;
 
         }
+
+       
 
         public void SetFixedSquares(int x, int y, int number)
         {
