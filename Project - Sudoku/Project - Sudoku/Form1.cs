@@ -101,12 +101,12 @@ namespace Project___Sudoku
 
         private void UpdateBoard(int y, int x, string rawValue, bool isFixed = false)//last arugment is optional default false
         {
-            var currentCell = puzzle.Rows[x].Cells[y];
+            var currentCell = puzzle.Rows[y].Cells[x];
 
             if (rawValue == string.Empty)
             {
                 currentCell.ErrorText = string.Empty;
-                board.ClearSquare(y, x);
+                board.ClearSquare(x, y);
             }
 
             if ((int.TryParse(rawValue, out var value) && value >= 1 && value <= 9))
@@ -115,18 +115,18 @@ namespace Project___Sudoku
                 
                 if (isFixed)
                 {
-                    board.SetFixedSquares(y, x, value);
+                    board.SetFixedSquares(x, y, value);
                 }
                 else
                 {
-                    board.SetSquare(y, x, value);
+                    board.SetSquare(x, y, value);
                 }
 
             }
             else
             {
                 currentCell.ErrorText = "!";
-                board.ClearSquare(y, x);
+                board.ClearSquare(x, y);
             }
             
 
@@ -138,6 +138,18 @@ namespace Project___Sudoku
         }
 
         private void CheckButton_Click(object sender, EventArgs e)
+        {
+            if (board.ValidateBoard())
+            {
+                MessageBox.Show("Valid Board!");
+            }
+            else
+            {
+                MessageBox.Show("Invalid Board");
+            }
+        }
+
+        private void CreateSolution_Click(object sender, EventArgs e)
         {
             if (board.Solve(out var solution))
             {
@@ -155,11 +167,6 @@ namespace Project___Sudoku
             }
 
             ;
-        }
-
-        private void CreateSolution_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

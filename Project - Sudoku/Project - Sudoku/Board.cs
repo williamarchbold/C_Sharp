@@ -12,27 +12,52 @@ namespace Project___Sudoku
         private SquareType[,] squareTypes = new SquareType[9, 9]; //this initializes a 2D array with each value set to NONE
 
 
-        public void SetSquare(int y, int x, int number)
+        public void SetSquare(int x, int y, int number)
         {
-            board[y, x] = number;
+            board[x, y] = number;
+            squareTypes[x, y] = SquareType.SET;
 
         }
 
-        public void SetFixedSquares(int y, int x, int number)
+        public void SetFixedSquares(int x, int y, int number)
         {
-            SetSquare(y, x, number);
-            squareTypes[y, x] = SquareType.FIXED;
+            SetSquare(x, y, number);
+            squareTypes[x, y] = SquareType.FIXED;
         }
 
-        public void ClearSquare(int y, int x)
+        public void ClearSquare(int x, int y)
         {
-            board[y, x] = 0;
+            board[x, y] = 0;
+            squareTypes[x, y] = SquareType.NONE;
         }
 
-        //public bool ValidateBoard()
-        //{
+        public bool ValidateBoard()
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                if (ValidateRow(i))
+                {
+                    if (ValidateColumn(i))
+                    {
+                        continue;
+                    }
+                }
+                return false;
 
-        //}
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (ValidateSection(i*3, j*3)) //multiply by 3 to get into next subgrid when need to get into next subgrid
+                    {
+                        continue;
+                    }
+                    return false;
+                }
+            }
+            return true;
+        }
 
 
 
@@ -71,11 +96,11 @@ namespace Project___Sudoku
             var seeNumbers = new System.Collections.Generic.HashSet<int>(); //hashset uses gethashcode algorithm so will ensure only unique ints are added
 
 
-            for (int i = 1; i <= 3; i++)
+            for (int i = x - (x % 3); i < x - (x % 3) + 3; i++)
             {
-                for (int j = 1; j <= 3; j++)
-                {
-                    var number = board[x * i - 1, j * y - 1]; //multiply by x and y to move back into appropriate subgrid
+                for (int j = y - (y % 3); j < y - (y % 3) + 3; j++)
+                { 
+                    var number = board[i,j]; //multiply by x and y to move back into appropriate subgrid
                     if (number == 0)
                     {
                         return false;
@@ -101,24 +126,13 @@ namespace Project___Sudoku
                 }
                 return count == 81;
             }
-            if (squareTypes[y,x] != SquareType.NONE)
-            {
-                int nextX = x;
-                int nextY = y + 1;
-                if (nextX == 9)
-                {
-                    nextX = x+ 1;
-                    nextY = 0;
-                }
-                Solve(nextX, nextY);
-            }
-            else
+            if (squareTypes[x,y] == SquareType.NONE) // if square has no input try putting in a square candidate
             {
                 var candidates = CheckCandidates(x, y);
                 foreach (var candidate in candidates)
                 {
-                    board[y, x] = candidate;
-                    squareTypes[y, x] = SquareType.SET;
+                    board[x, y] = candidate;
+                    squareTypes[x, y] = SquareType.SET;
                     int nextX = x;
                     int nextY = y + 1;
                     if (nextY == 9)
@@ -132,11 +146,22 @@ namespace Project___Sudoku
                     }
                     else
                     {
-                        board[y, x] = 0;
-                        squareTypes[y, x] = SquareType.NONE;
+                        board[x, y] = 0;
+                        squareTypes[x, y] = SquareType.NONE;
                     }
 
                 }
+            }
+            else
+            {
+                int nextX = x;
+                int nextY = y + 1;
+                if (nextY == 9)
+                {
+                    nextX = x + 1;
+                    nextY = 0;
+                }
+                return Solve(nextX, nextY);
             }
 
 
@@ -155,22 +180,19 @@ namespace Project___Sudoku
 
             for (int i = 0; i < 9; i++)
             {
-                if (squareTypes[y, i] != SquareType.NONE)
+                if (squareTypes[x, i] != SquareType.NONE) //checking row
                 {
-                    candidates.Remove(board[y, i]);
+                    candidates.Remove(board[x, i]);
                 }
-            }
-            for (int i = 0; i < 9; i++)
-            {
-                if (squareTypes[i, x] != SquareType.NONE)
+                if (squareTypes[i, y] != SquareType.NONE) //checking column
                 {
-                    candidates.Remove(board[i, x]);
+                    candidates.Remove(board[i, y]);
                 }
             }
 
             for (int i = x - (x%3); i < x - (x%3)+3; i++)
             {
-                for (int j = y; j < y-(y%3)+3; j++)
+                for (int j = y - (y%3); j < y-(y%3)+3; j++)
                 {
                     if (squareTypes[i, j] != SquareType.NONE)
                     {
