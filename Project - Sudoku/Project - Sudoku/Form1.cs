@@ -43,13 +43,21 @@ namespace Project___Sudoku
             }
         }
 
+        private int importedSet = 0;
+
         private void newFileButton_Click(object sender, EventArgs e)
         {
             try
             {
                 var lines = File.ReadLines("examples.txt");
-                var firstPuzzle = lines.First(); //this should create an array of 81 characters
-                SetCurrentBoard(Board.FromString(firstPuzzle, out var solution), solution);
+                var firstPuzzle = lines.Skip(importedSet).FirstOrDefault() ; //this should create an array of 81 characters
+                if (firstPuzzle == null)
+                {
+                    importedSet = 0;
+                    firstPuzzle = lines.Skip(importedSet).FirstOrDefault();
+                }
+                SetCurrentBoard(Board.FromString(firstPuzzle));
+                importedSet++;
                
                 //board.ValidateRow(0);
 
@@ -64,14 +72,14 @@ namespace Project___Sudoku
 
         }
 
-        private void SetCurrentBoard(Board board, int [,] solution)
+        private void SetCurrentBoard(Board board)
         {
             this.board = board;
             for (int i = 0; i < 9; i++)
             {
                 for (int j = 0; j < 9; j++)
                 {
-                    var number = solution[j, i];
+                    var number = board[j, i];
 
                     puzzle[j, i].Value = number > 0 ? number.ToString() : string.Empty; //either set square value to number or empty string if value 0
                     puzzle[j, i].ErrorText = string.Empty; //if the asterisk in a stop sign shows up, delete it
@@ -147,13 +155,13 @@ namespace Project___Sudoku
 
         private void CreateSolution_Click(object sender, EventArgs e)
         {
-            if (board.Solve(out var solution))
+            if (board.Solve())
             {
                 for (int i = 0; i < 9; i++)
                 {
                     for (int j = 0; j < 9; j++)
                     {
-                        puzzle[j, i].Value = solution[j, i];
+                        puzzle[j, i].Value = board[j, i];
                     }
                 }
             }
@@ -167,7 +175,17 @@ namespace Project___Sudoku
 
         private void RandomNine_Click(object sender, EventArgs e)
         {
-            SetCurrentBoard(Board.FromRandom(out var solution), solution);
+            SetCurrentBoard(Board.FromRandom());
+
+        }
+
+        private void RemoveNFixedSquares_Click(object sender, EventArgs e)
+        {
+
+            int number = (int)numericUpDown1.Value;
+            SetCurrentBoard(Board.FromRandom(number));
+
+
 
         }
     }

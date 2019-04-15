@@ -12,8 +12,15 @@ namespace Project___Sudoku
 
         private SquareType[,] squareTypes = new SquareType[9, 9]; //this initializes a 2D array with each value set to NONE
 
+        //indexer get property, which forces user to have to go through the board's known methods to set a square's value
+        public int this[int X, int Y]
+        {
+            get { return board[X, Y]; }
+        }
 
-        public static Board FromRandom(out int [,]solution) //this is a factory method - static which will use object type
+
+
+        public static Board FromRandom() //this is a factory method - static which will use object type
         {
             Random random = new Random();
             var candidates = new List<int>
@@ -40,12 +47,58 @@ namespace Project___Sudoku
                 
 
             }
-            solution = scratchBoard.board;
+            
             return scratchBoard;
 
         }
 
-        public static Board FromString(string fileinput, out int[,] solution )
+        public static Board FromRandom(int numberToRemove)
+        {
+            Random random = new Random();
+            int x, y;
+
+
+            var tempBoard = Board.FromRandom();
+            if (tempBoard.Solve())
+            {
+
+
+                for (int i = 0; i < numberToRemove; i++)
+                {
+                    var set = false;
+                    while (!set)
+                    {
+                        x = random.Next(9);
+                        y = random.Next(9);
+
+                        if (tempBoard.board[x, y] != 0)
+                        {
+                            tempBoard.ClearSquare(x, y);
+                            set = true;
+                        }
+                    }
+
+                }
+                for (int i = 0; i < 9; i++)
+                {
+                    for (int j = 0; j < 9; j++)
+                    {
+                        if (tempBoard.board[i,j] != 0)
+                        {
+                            tempBoard.squareTypes[i,j] = SquareType.FIXED;
+                        }
+                    }
+                }
+                return tempBoard;
+
+            }
+            else
+            {
+                throw new InvalidOperationException("Solve's if statement did not return true");
+            }
+        }
+
+        public static Board FromString(string fileinput)
         {
             Board importedBoard = new Board();//start with a fresh board 
 
@@ -69,7 +122,7 @@ namespace Project___Sudoku
 
 
             }
-            solution = importedBoard.board;
+            
             return importedBoard;
         }
 
@@ -272,25 +325,14 @@ namespace Project___Sudoku
         }
 
 
-        public bool Solve(out int[,] result) //acting like multiple return types 
+        public bool Solve() //acting like multiple return types 
         {
             
-            var solve = Solve(0, 0);
-            result = board;
-            return solve;
-
+            return Solve(0, 0);
             
 
         }
 
     }
 
-
-
-
-        /*public bool ValidateBoard(int x, int y)
-        {
-
-
-        }*/
 }

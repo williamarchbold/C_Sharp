@@ -28,17 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.RandomNine = new System.Windows.Forms.Button();
             this.RandomSolution = new System.Windows.Forms.Button();
             this.CheckButton = new System.Windows.Forms.Button();
             this.newFileButton = new System.Windows.Forms.Button();
             this.puzzle = new System.Windows.Forms.DataGridView();
-            this.RandomNine = new System.Windows.Forms.Button();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.RemoveNFixedSquares = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.puzzle)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -49,6 +54,8 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.RemoveNFixedSquares);
+            this.splitContainer1.Panel1.Controls.Add(this.numericUpDown1);
             this.splitContainer1.Panel1.Controls.Add(this.RandomNine);
             this.splitContainer1.Panel1.Controls.Add(this.RandomSolution);
             this.splitContainer1.Panel1.Controls.Add(this.CheckButton);
@@ -57,9 +64,19 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.puzzle);
-            this.splitContainer1.Size = new System.Drawing.Size(800, 450);
-            this.splitContainer1.SplitterDistance = 266;
+            this.splitContainer1.Size = new System.Drawing.Size(969, 593);
+            this.splitContainer1.SplitterDistance = 322;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // RandomNine
+            // 
+            this.RandomNine.Location = new System.Drawing.Point(108, 307);
+            this.RandomNine.Name = "RandomNine";
+            this.RandomNine.Size = new System.Drawing.Size(99, 57);
+            this.RandomNine.TabIndex = 3;
+            this.RandomNine.Text = "Random Nine";
+            this.RandomNine.UseVisualStyleBackColor = true;
+            this.RandomNine.Click += new System.EventHandler(this.RandomNine_Click);
             // 
             // RandomSolution
             // 
@@ -110,25 +127,53 @@
             this.puzzle.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.puzzle.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.puzzle.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.puzzle.Size = new System.Drawing.Size(530, 450);
+            this.puzzle.Size = new System.Drawing.Size(643, 593);
             this.puzzle.TabIndex = 0;
             this.puzzle.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.puzzle_CellValidating);
             // 
-            // RandomNine
+            // numericUpDown1
             // 
-            this.RandomNine.Location = new System.Drawing.Point(108, 307);
-            this.RandomNine.Name = "RandomNine";
-            this.RandomNine.Size = new System.Drawing.Size(99, 57);
-            this.RandomNine.TabIndex = 3;
-            this.RandomNine.Text = "Random Nine";
-            this.RandomNine.UseVisualStyleBackColor = true;
-            this.RandomNine.Click += new System.EventHandler(this.RandomNine_Click);
+            this.numericUpDown1.Location = new System.Drawing.Point(150, 433);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            80,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 26);
+            this.numericUpDown1.TabIndex = 4;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // RemoveNFixedSquares
+            // 
+            this.RemoveNFixedSquares.Location = new System.Drawing.Point(30, 410);
+            this.RemoveNFixedSquares.Name = "RemoveNFixedSquares";
+            this.RemoveNFixedSquares.Size = new System.Drawing.Size(99, 71);
+            this.RemoveNFixedSquares.TabIndex = 5;
+            this.RemoveNFixedSquares.Text = "Remove n Many";
+            this.RemoveNFixedSquares.UseVisualStyleBackColor = true;
+            this.RemoveNFixedSquares.Click += new System.EventHandler(this.RemoveNFixedSquares_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(969, 593);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -137,6 +182,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.puzzle)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -149,6 +195,9 @@
         private System.Windows.Forms.Button CheckButton;
         private System.Windows.Forms.Button RandomSolution;
         private System.Windows.Forms.Button RandomNine;
+        private System.Windows.Forms.Button RemoveNFixedSquares;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
 
