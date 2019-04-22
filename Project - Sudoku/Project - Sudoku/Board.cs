@@ -4,12 +4,21 @@ using System.Linq;
 
 namespace Project___Sudoku
 {
+    /*
+     * <p> A Board object will be what the program manipulates to create and solve Sudoku puzzles.
+     * Every Board object has 2 9x9 boards: 1 will be for putting integers in and another will 
+     * be for keeping track of whether those integers were fixed, i.e. fromt the imported text 
+     * and can't be changed, empty (default value) or set.</p>
+     * 
+     * @author William Archbold
+     */
     public class Board
     {
 
-        enum SquareType {NONE, SET, FIXED }
-        private int[,] board = new int[9,9]; //9*9 multidimensional array
+        private int[,] board = new int[9, 9]; //9*9 multidimensional array
 
+        enum SquareType {NONE, SET, FIXED } //these will be the three types of values that a second behind the scenes array will use to keep track of the program's main board's squares' value types
+   
         private SquareType[,] squareTypes = new SquareType[9, 9]; //this initializes a 2D array with each value set to NONE
 
         //indexer get property, which forces user to have to go through the board's known methods to set a square's value
@@ -18,9 +27,10 @@ namespace Project___Sudoku
             get { return board[X, Y]; }
         }
 
-
-
-        public static Board FromRandom() //this is a factory method - static which will use object type
+        /*
+         * This is a factory method - static which will use object type and create a board object within
+         */
+        public static Board FromRandom() 
         {
             Random random = new Random();
             var candidates = new List<int>
@@ -44,14 +54,17 @@ namespace Project___Sudoku
                         set = true;
                     }
                 }
-                
-
-            }
-            
+            }  
             return scratchBoard;
-
         }
 
+        /*
+         * <p> This method is only called when the Create Random Board button is pushed.
+         * Method calls static method FromRandom to create a randomly populated board.
+         * Then uses the method parameter, which is the number of squares that the user dictated to remove
+         * and starts randomly removing that many sqaures' values. Method will return a board that is used 
+         * as a parameter to SetCurrentBoard </p>
+         */
         public static Board FromRandom(int numberToRemove)
         {
             Random random = new Random();
@@ -94,10 +107,13 @@ namespace Project___Sudoku
             }
             else
             {
-                throw new InvalidOperationException("Solve's if statement did not return true");
+                throw new InvalidOperationException("Solve's if statement did not return true"); //included this throw because Visual Studio wanted an else statement included
             }
         }
 
+        /*
+         * This method is called when the user wants to play off an imported puzzle from a file
+         */
         public static Board FromString(string fileinput)
         {
             Board importedBoard = new Board();//start with a fresh board 
@@ -116,17 +132,16 @@ namespace Project___Sudoku
                     if ((int.TryParse(character.ToString(), out var value) && value >= 1 && value <= 9))
                     {
                         importedBoard.SetSquare(i, j, value); //this updates the board in memory
-                    }
-                    
+                    }   
                 }
-
-
             }
             
             return importedBoard;
         }
 
-
+        /*
+         * Set the board's current square's value and set the squareType's enumeration value
+         */
         public void SetSquare(int x, int y, int number)
         {
             board[x, y] = number;
@@ -135,19 +150,27 @@ namespace Project___Sudoku
         }
 
        
-
+        /*
+         * Called when current square's value is fixed 
+         */
         public void SetFixedSquares(int x, int y, int number)
         {
             SetSquare(x, y, number);
             squareTypes[x, y] = SquareType.FIXED;
         }
 
+        /*
+         * Clear the square's value and set the squareType's enum to NONE
+         */
         public void ClearSquare(int x, int y)
         {
             board[x, y] = 0;
             squareTypes[x, y] = SquareType.NONE;
         }
 
+        /*
+         * Method will ensure that the rules of Sudoku are met
+         */
         public bool ValidateBoard()
         {
             for (int i = 0; i < 9; i++)
@@ -176,8 +199,9 @@ namespace Project___Sudoku
             return true;
         }
 
-
-
+        /*
+         * This method validates the current row's values
+         */
         public bool ValidateRow(int x)
         {
             var seeNumbers = new System.Collections.Generic.HashSet<int>(); //hashset uses gethashcode algorithm so will ensure only unique ints are added
@@ -193,6 +217,9 @@ namespace Project___Sudoku
             return seeNumbers.Count == 9;
         }
 
+        /*
+         * This method validate the current column's values
+         */
         private bool ValidateColumn(int y)
         {
             var seeNumbers = new System.Collections.Generic.HashSet<int>(); //hashset uses gethashcode algorithm so will ensure only unique ints are added
@@ -208,10 +235,12 @@ namespace Project___Sudoku
             return seeNumbers.Count == 9;
         }
 
+        /*
+         * This method validates the current 3x3 subgrid in accoradance with Sudoku rules
+         */
         public bool ValidateSection(int x, int y)
         {
             var seeNumbers = new System.Collections.Generic.HashSet<int>(); //hashset uses gethashcode algorithm so will ensure only unique ints are added
-
 
             for (int i = x - (x % 3); i < x - (x % 3) + 3; i++)
             {
@@ -229,8 +258,14 @@ namespace Project___Sudoku
             return seeNumbers.Count == 9;
         }
 
+        /*
+         * <p>This is the key method of the program. Recursive method that will bruteforce solve the Sudoku board. 
+         * I used the below video as source code for this method, but adapted it to C#</p>
+         * https://www.youtube.com/watch?v=gN8xrMwrLSc
+         */
         private bool Solve(int x, int y)
         {
+            //starting off the recursive function with the desired endstate where we reach the last row 
             if (x == 9)
             {
                 var count = 0;
@@ -238,7 +273,7 @@ namespace Project___Sudoku
                 {
                     for (int j = 0; j < 9; j++)
                     {
-                        count += squareTypes[i, j] != SquareType.NONE ? 1 : 0;
+                        count += squareTypes[i, j] != SquareType.NONE ? 1 : 0; //ensure that every square has a valid value
                     }
                 }
                 return count == 81;
@@ -280,13 +315,13 @@ namespace Project___Sudoku
                 }
                 return Solve(nextX, nextY);
             }
-
-
             return false;
         }
 
-        //IEnumerable because not interested in what's coming out of the list
-
+        /*
+         * <p>This method will check the candidate int values for the current square.
+         * Method returns IEnumerable<int> because not interested in what's coming out of the list.</p>
+         */
         private IEnumerable<int> CheckCandidates(int x, int y)
         {
             
@@ -317,11 +352,7 @@ namespace Project___Sudoku
                     }
                 }
             }
-
             return candidates;
-
-
-
         }
 
 
@@ -329,10 +360,6 @@ namespace Project___Sudoku
         {
             
             return Solve(0, 0);
-            
-
         }
-
     }
-
 }
