@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TCPConnection..cs" />
     <Compile Include="TicTacToeGame.cs" />
     <Compile Include="TicTacToeSquare.cs" />
     <Compile Include="TicTacToeUIBoard.cs">

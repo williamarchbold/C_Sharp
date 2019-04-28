@@ -14,6 +14,8 @@ namespace Project_8_TicTacToe__Winforms_and_IP
     {
         public TicTacToeGame currentGame = new TicTacToeGame();
 
+        TCPConnection tcpconnetion = new TCPConnection();
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -30,11 +32,12 @@ namespace Project_8_TicTacToe__Winforms_and_IP
                 {
                     Button b = (Button)c;
                     b.Enabled = true;
+                    b.Text = String.Empty;
                 }
             }
             catch { }
 
-            MessageBox.Show("{0} goes first!", currentGame.Check_Player().ToString());
+            MessageBox.Show($"{currentGame.Check_Player()} goes first!");
         }
 
         public TicTacToeUIBoard()
@@ -68,7 +71,7 @@ namespace Project_8_TicTacToe__Winforms_and_IP
                 currentGame.Update_Board(b.Tag);
                 if (currentGame.Check_Winner())
                 {
-                    MessageBox.Show("{0} wins!", currentGame.Check_Player().ToString());
+                    MessageBox.Show($"{currentGame.Check_Player()} wins!");
                     Disable_Buttons();
                 }
                 if (currentGame.Check_For_Draw())
@@ -110,6 +113,21 @@ namespace Project_8_TicTacToe__Winforms_and_IP
 
         }
 
-       
+        private void connectPlayerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tcpconnetion.Join_Game(IPAdress.Text);
+
+        }
+
+        private void joinGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void IPAdress_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+
     }
 }

@@ -31,6 +31,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.connectPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.joinGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,6 +45,7 @@
             this.C1 = new System.Windows.Forms.Button();
             this.C2 = new System.Windows.Forms.Button();
             this.C3 = new System.Windows.Forms.Button();
+            this.IPAdress = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,6 +65,8 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newGameToolStripMenuItem,
+            this.connectPlayerToolStripMenuItem,
+            this.joinGameToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(50, 29);
@@ -73,6 +78,20 @@
             this.newGameToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
             this.newGameToolStripMenuItem.Text = "New Game";
             this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
+            // 
+            // connectPlayerToolStripMenuItem
+            // 
+            this.connectPlayerToolStripMenuItem.Name = "connectPlayerToolStripMenuItem";
+            this.connectPlayerToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
+            this.connectPlayerToolStripMenuItem.Text = "Host Game";
+            this.connectPlayerToolStripMenuItem.Click += new System.EventHandler(this.connectPlayerToolStripMenuItem_Click);
+            // 
+            // joinGameToolStripMenuItem
+            // 
+            this.joinGameToolStripMenuItem.Name = "joinGameToolStripMenuItem";
+            this.joinGameToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
+            this.joinGameToolStripMenuItem.Text = "Join Game";
+            this.joinGameToolStripMenuItem.Click += new System.EventHandler(this.joinGameToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -92,7 +111,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(146, 30);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -195,11 +214,20 @@
             this.C3.UseVisualStyleBackColor = true;
             this.C3.Click += new System.EventHandler(this.Button_Click);
             // 
+            // IPAdress
+            // 
+            this.IPAdress.Location = new System.Drawing.Point(202, 36);
+            this.IPAdress.Name = "IPAdress";
+            this.IPAdress.Size = new System.Drawing.Size(100, 26);
+            this.IPAdress.TabIndex = 10;
+            this.IPAdress.TextChanged += new System.EventHandler(this.IPAdress_TextChanged);
+            // 
             // TicTacToeUIBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(519, 558);
+            this.Controls.Add(this.IPAdress);
             this.Controls.Add(this.C3);
             this.Controls.Add(this.C2);
             this.Controls.Add(this.C1);
@@ -239,6 +267,9 @@
         private System.Windows.Forms.Button C1;
         private System.Windows.Forms.Button C2;
         private System.Windows.Forms.Button C3;
+        private System.Windows.Forms.ToolStripMenuItem connectPlayerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem joinGameToolStripMenuItem;
+        private System.Windows.Forms.TextBox IPAdress;
     }
 }
 

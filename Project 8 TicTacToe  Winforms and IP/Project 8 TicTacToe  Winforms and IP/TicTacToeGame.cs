@@ -20,6 +20,13 @@ namespace Project_8_TicTacToe__Winforms_and_IP
 
         public TicTacToeGame()
         {
+            for (int x = 0; x < 3; x++)
+            {
+                for (int y = 0; y < 3; y++)
+                {
+                    board[x, y] = new TicTacToeSquare();
+                }
+            }
             turnCount = 9;
             turn = TURN.Player1;
         }
@@ -41,14 +48,14 @@ namespace Project_8_TicTacToe__Winforms_and_IP
 
         public bool Check_Winner()
         {
-            if (Check_Rows() || Check_Rows() || Check_Diagonals())
+            if (Check_Rows() || Check_Columns() || Check_Diagonals())
             {
                 return true;
             }
             return false;
         }
 
-        private bool Check_Rows()
+        private bool Check_Columns()
         {
             int x = 0;
             for (int y = 0; y < 3; y++)
@@ -66,7 +73,7 @@ namespace Project_8_TicTacToe__Winforms_and_IP
             return false;
         }
 
-        private bool Check_Columns()
+        private bool Check_Rows()
         {
             int y = 0;
             for (int x = 0; x < 3; x++)
@@ -104,7 +111,7 @@ namespace Project_8_TicTacToe__Winforms_and_IP
 
         public void Update_Player()
         {
-            turn++;
+            turn = turn == TURN.Player1? TURN.Player2:TURN.Player1;
         }
 
         public TURN Check_Player()
@@ -133,7 +140,7 @@ namespace Project_8_TicTacToe__Winforms_and_IP
             }
 
             Random random = new Random();
-            int num = random.Next(2);
+            int num = random.Next(0,2);
             if (num == 0)
             {
                 turn = TURN.Player1;
@@ -141,7 +148,9 @@ namespace Project_8_TicTacToe__Winforms_and_IP
             else
             {
                 turn = TURN.Player2;
-            }                 
+            }
+
+            turnCount = 9;
         }
     }
 }
