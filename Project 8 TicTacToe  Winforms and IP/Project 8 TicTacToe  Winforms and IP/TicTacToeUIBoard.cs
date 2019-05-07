@@ -63,15 +63,19 @@ namespace Project_8_TicTacToe__Winforms_and_IP
             }
             else
             {
-                char firstMove = (char)tcpconnection.stream.ReadByte();
-                if (firstMove == 'X' || firstMove == 'O')
+                try
                 {
-                    currentGame.Set_Turn((firstMove == 'X' ? PLAYER.X : PLAYER.O));
+                    char firstMove = (char)tcpconnection.stream.ReadByte();
+                    if (firstMove == 'X' || firstMove == 'O')
+                    {
+                        currentGame.Set_Turn((firstMove == 'X' ? PLAYER.X : PLAYER.O));
+                    }                   
                 }
-                else
+                catch (Exception)
                 {
-                    throw new Exception("Cannot read host's first move decision!");
-                }              
+                    MessageBox.Show("No player connected.");
+                    return;
+                }         
             }
             if (currentGame.IsMyTurn())
             {
@@ -80,11 +84,10 @@ namespace Project_8_TicTacToe__Winforms_and_IP
             }
             else
             {
-                //MessageBox.Show("Other Player goes.");
                 MessageDisplay.Text = "Other Player goes!";
                 Refresh_Message_Box();
                 Read_Byte_Update_Game_And_Board();
-            }
+            }           
         }
 
        
@@ -192,6 +195,7 @@ namespace Project_8_TicTacToe__Winforms_and_IP
         {
             
             tcpconnection.Join_Game(IPAdress.Text);
+            MessageBox.Show(tcpconnection.MessageBox());
 
         }
 
@@ -259,7 +263,7 @@ namespace Project_8_TicTacToe__Winforms_and_IP
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("This is a two player tic tac toe game designed by William A.\n" +
-                "Please enter the IPv4 address of your opponent. Click on File->Join Game and then File-> New Game" +
+                "Please enter the IPv4 address of your opponent. Then each player click on File->Join Game and then File-> New Game" +
                 "if connection is established.");
         }
 

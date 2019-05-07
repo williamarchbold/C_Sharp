@@ -217,11 +217,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(47, 58);
+            this.label1.Location = new System.Drawing.Point(93, 58);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(308, 20);
+            this.label1.Size = new System.Drawing.Size(274, 20);
             this.label1.TabIndex = 12;
-            this.label1.Text = "Opponents IP Address (xxxx.xxxx.xxxx.xxxx)";
+            this.label1.Text = "Opponent\'s IPv4 Address (w/ periods)";
             // 
             // MessageDisplay
             // 
@@ -230,7 +230,6 @@
             this.MessageDisplay.Name = "MessageDisplay";
             this.MessageDisplay.Size = new System.Drawing.Size(0, 20);
             this.MessageDisplay.TabIndex = 13;
-            //this.MessageDisplay.Click += new System.EventHandler(this.label2_Click);
             // 
             // TicTacToeUIBoard
             // 

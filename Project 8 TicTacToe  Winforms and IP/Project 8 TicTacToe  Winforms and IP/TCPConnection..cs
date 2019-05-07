@@ -13,7 +13,9 @@ namespace Project_8_TicTacToe__Winforms_and_IP
         TcpClient connection;
         public NetworkStream stream { get; private set; }
 
-        public bool isHost { get; private set; } 
+        public bool isHost { get; private set; }
+
+        private string message;
 
         /*public async Task Host_Game()
         {
@@ -87,6 +89,12 @@ namespace Project_8_TicTacToe__Winforms_and_IP
 
         private void AddToMessageBox(string v)
         {
+            message = v;
+        }
+
+        public string MessageBox()
+        {
+            return message;
         }
 
         private void Button_SendPing_Click(object sender, EventArgs e)
