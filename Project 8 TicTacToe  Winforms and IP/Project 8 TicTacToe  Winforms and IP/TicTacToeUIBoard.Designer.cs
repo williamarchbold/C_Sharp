@@ -217,11 +217,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(93, 58);
+            this.label1.Location = new System.Drawing.Point(56, 58);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(274, 20);
+            this.label1.Size = new System.Drawing.Size(311, 20);
             this.label1.TabIndex = 12;
-            this.label1.Text = "Opponent\'s IPv4 Address (w/ periods)";
+            this.label1.Text = "Opponent\'s IP Address (xxxx.xxxx.xxxx.xxxx)";
             // 
             // MessageDisplay
             // 
