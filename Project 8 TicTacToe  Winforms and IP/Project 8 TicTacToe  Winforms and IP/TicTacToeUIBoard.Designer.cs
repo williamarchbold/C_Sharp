@@ -31,7 +31,6 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.connectPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.joinGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,6 +45,8 @@
             this.C2 = new System.Windows.Forms.Button();
             this.C3 = new System.Windows.Forms.Button();
             this.IPAdress = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.MessageDisplay = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,7 +66,6 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newGameToolStripMenuItem,
-            this.connectPlayerToolStripMenuItem,
             this.joinGameToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -75,28 +75,21 @@
             // newGameToolStripMenuItem
             // 
             this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
-            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
+            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(182, 30);
             this.newGameToolStripMenuItem.Text = "New Game";
             this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
-            // 
-            // connectPlayerToolStripMenuItem
-            // 
-            this.connectPlayerToolStripMenuItem.Name = "connectPlayerToolStripMenuItem";
-            this.connectPlayerToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
-            this.connectPlayerToolStripMenuItem.Text = "Host Game";
-            this.connectPlayerToolStripMenuItem.Click += new System.EventHandler(this.connectPlayerToolStripMenuItem_Click);
             // 
             // joinGameToolStripMenuItem
             // 
             this.joinGameToolStripMenuItem.Name = "joinGameToolStripMenuItem";
-            this.joinGameToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
+            this.joinGameToolStripMenuItem.Size = new System.Drawing.Size(182, 30);
             this.joinGameToolStripMenuItem.Text = "Join Game";
-            this.joinGameToolStripMenuItem.Click += new System.EventHandler(this.joinGameToolStripMenuItem_Click);
+            this.joinGameToolStripMenuItem.Click += new System.EventHandler(this.Connect_Player_ToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(182, 30);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -122,7 +115,7 @@
             this.A1.Name = "A1";
             this.A1.Size = new System.Drawing.Size(100, 100);
             this.A1.TabIndex = 1;
-            this.A1.Tag = "1 1";
+            this.A1.Tag = "1";
             this.A1.UseVisualStyleBackColor = true;
             this.A1.Click += new System.EventHandler(this.Button_Click);
             // 
@@ -133,7 +126,7 @@
             this.A2.Name = "A2";
             this.A2.Size = new System.Drawing.Size(100, 100);
             this.A2.TabIndex = 2;
-            this.A2.Tag = "1 2";
+            this.A2.Tag = "2";
             this.A2.UseVisualStyleBackColor = true;
             this.A2.Click += new System.EventHandler(this.Button_Click);
             // 
@@ -144,7 +137,7 @@
             this.A3.Name = "A3";
             this.A3.Size = new System.Drawing.Size(100, 100);
             this.A3.TabIndex = 3;
-            this.A3.Tag = "1 3";
+            this.A3.Tag = "3";
             this.A3.UseVisualStyleBackColor = true;
             this.A3.Click += new System.EventHandler(this.Button_Click);
             // 
@@ -155,7 +148,7 @@
             this.B1.Name = "B1";
             this.B1.Size = new System.Drawing.Size(100, 100);
             this.B1.TabIndex = 4;
-            this.B1.Tag = "2 1";
+            this.B1.Tag = "4";
             this.B1.UseVisualStyleBackColor = true;
             this.B1.Click += new System.EventHandler(this.Button_Click);
             // 
@@ -166,7 +159,7 @@
             this.B2.Name = "B2";
             this.B2.Size = new System.Drawing.Size(100, 100);
             this.B2.TabIndex = 5;
-            this.B2.Tag = "2 2";
+            this.B2.Tag = "5";
             this.B2.UseVisualStyleBackColor = true;
             this.B2.Click += new System.EventHandler(this.Button_Click);
             // 
@@ -177,7 +170,7 @@
             this.B3.Name = "B3";
             this.B3.Size = new System.Drawing.Size(100, 100);
             this.B3.TabIndex = 6;
-            this.B3.Tag = "2 3";
+            this.B3.Tag = "6";
             this.B3.UseVisualStyleBackColor = true;
             this.B3.Click += new System.EventHandler(this.Button_Click);
             // 
@@ -188,7 +181,7 @@
             this.C1.Name = "C1";
             this.C1.Size = new System.Drawing.Size(100, 100);
             this.C1.TabIndex = 7;
-            this.C1.Tag = "3 1";
+            this.C1.Tag = "7";
             this.C1.UseVisualStyleBackColor = true;
             this.C1.Click += new System.EventHandler(this.Button_Click);
             // 
@@ -199,7 +192,7 @@
             this.C2.Name = "C2";
             this.C2.Size = new System.Drawing.Size(100, 100);
             this.C2.TabIndex = 8;
-            this.C2.Tag = "3 2";
+            this.C2.Tag = "8";
             this.C2.UseVisualStyleBackColor = true;
             this.C2.Click += new System.EventHandler(this.Button_Click);
             // 
@@ -210,23 +203,42 @@
             this.C3.Name = "C3";
             this.C3.Size = new System.Drawing.Size(100, 100);
             this.C3.TabIndex = 9;
-            this.C3.Tag = "3 3";
+            this.C3.Tag = "9";
             this.C3.UseVisualStyleBackColor = true;
             this.C3.Click += new System.EventHandler(this.Button_Click);
             // 
             // IPAdress
             // 
-            this.IPAdress.Location = new System.Drawing.Point(202, 36);
+            this.IPAdress.Location = new System.Drawing.Point(373, 55);
             this.IPAdress.Name = "IPAdress";
             this.IPAdress.Size = new System.Drawing.Size(100, 26);
             this.IPAdress.TabIndex = 10;
-            this.IPAdress.TextChanged += new System.EventHandler(this.IPAdress_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(47, 58);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(308, 20);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "Opponents IP Address (xxxx.xxxx.xxxx.xxxx)";
+            // 
+            // MessageDisplay
+            // 
+            this.MessageDisplay.AutoSize = true;
+            this.MessageDisplay.Location = new System.Drawing.Point(219, 92);
+            this.MessageDisplay.Name = "MessageDisplay";
+            this.MessageDisplay.Size = new System.Drawing.Size(0, 20);
+            this.MessageDisplay.TabIndex = 13;
+            //this.MessageDisplay.Click += new System.EventHandler(this.label2_Click);
             // 
             // TicTacToeUIBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(519, 558);
+            this.Controls.Add(this.MessageDisplay);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.IPAdress);
             this.Controls.Add(this.C3);
             this.Controls.Add(this.C2);
@@ -267,9 +279,10 @@
         private System.Windows.Forms.Button C1;
         private System.Windows.Forms.Button C2;
         private System.Windows.Forms.Button C3;
-        private System.Windows.Forms.ToolStripMenuItem connectPlayerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem joinGameToolStripMenuItem;
         private System.Windows.Forms.TextBox IPAdress;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label MessageDisplay;
     }
 }
 

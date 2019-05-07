@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 
 namespace Project_8_TicTacToe__Winforms_and_IP
 {
-    public enum TURN { Player1, Player2 };
+    public enum PLAYER { X, O };
 
-    public class TicTacToeGame
+    class TicTacToeGame
     {
 
         //private TicTacToeBoard board;
 
         private TicTacToeSquare[,] board = new TicTacToeSquare[3, 3];
-
+        public PLAYER myCharacter { get; private set; } 
         private int turnCount { get; set; }
-        private TURN turn { get; set; }
+        private PLAYER turn { get; set; }
+
+        public bool IsMyTurn () { return turn == myCharacter; }
 
         public TicTacToeGame()
         {
@@ -27,16 +29,26 @@ namespace Project_8_TicTacToe__Winforms_and_IP
                     board[x, y] = new TicTacToeSquare();
                 }
             }
-            turnCount = 9;
-            turn = TURN.Player1;
+            turnCount = 8;
+            turn = PLAYER.X;
         }
 
-        public void Update_Board(object button)
+
+        public void SetCharacter(PLAYER player)
         {
-            string [] locationArray = button.ToString().Split(new string[] { " " }, StringSplitOptions.None);
-            int row = Convert.ToInt32(locationArray[0]) - 1;
-            int column = Convert.ToInt32(locationArray[1]) - 1;
-            if (turn == TURN.Player1)
+            myCharacter = player;
+        }
+
+        public bool IsEmptySquare(int row, int column)
+        {
+            return board[row, column].value == SQUARE_TYPE.EMPTY;
+        }
+
+        // Enters a players move, and tells if the game is over.
+        // The game is over if (1) someone wins, (2) tie/draw (3) network error!!
+        public void EnterMove(int row, int column)
+        {
+            if (turn == PLAYER.X)
             {
                 board[row, column].value = SQUARE_TYPE.X;
             }
@@ -111,12 +123,17 @@ namespace Project_8_TicTacToe__Winforms_and_IP
 
         public void Update_Player()
         {
-            turn = turn == TURN.Player1? TURN.Player2:TURN.Player1;
+            turn = turn == PLAYER.X? PLAYER.O:PLAYER.X;
         }
 
-        public TURN Check_Player()
+        public PLAYER Check_Player()
         {
             return turn;
+        }
+
+        public void Set_Turn(PLAYER player)
+        {
+            turn = player;
         }
 
         public void Update_turnCount()
@@ -129,6 +146,7 @@ namespace Project_8_TicTacToe__Winforms_and_IP
             return (turnCount == 0);
         }
 
+        //public void Clear_Board(TCPConnection connection)
         public void Clear_Board()
         {
             for (int x = 0; x < 3; x++)
@@ -138,19 +156,29 @@ namespace Project_8_TicTacToe__Winforms_and_IP
                     board[x, y].value = SQUARE_TYPE.EMPTY;
                 }
             }
+            /*
+            if (connection.isHost) //host is player X
+            {
+                    myCharacter = PLAYER.X;
+            }
+            
+            */
+            turnCount = 8;
+        }
 
+        public PLAYER Who_Goes_First()
+        {
             Random random = new Random();
-            int num = random.Next(0,2);
+            int num = random.Next(0, 2);
             if (num == 0)
             {
-                turn = TURN.Player1;
+                turn = PLAYER.X;
             }
             else
             {
-                turn = TURN.Player2;
+                turn = PLAYER.O;
             }
-
-            turnCount = 9;
+            return turn;
         }
     }
 }
