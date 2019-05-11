@@ -19,13 +19,13 @@ namespace Two_Player_Battleship_Game_Over_Internet
         [Description("O")] Ocean,
     }
 
-    class Coordinate
+    public class Coordinate
     {
         private int row;
         private int column;
-        private VALUE value; 
+        public VALUE value { get; set; } 
 
-        public Coordinate()
+        public Coordinate(int row, int column)
         {
             this.row = row;
             this.column = column;
@@ -37,9 +37,13 @@ namespace Two_Player_Battleship_Game_Over_Internet
             return this.value;
         }
 
-        public bool Is_Occupied()
+        public bool Is_Occupied => Get_Status() == VALUE.Ocean ? false : true;
+
+
+        public override string ToString()
         {
-            return Get_Status() == VALUE.Ocean ? false : true;
+            return value.GetDescription();
         }
+
     }
 }

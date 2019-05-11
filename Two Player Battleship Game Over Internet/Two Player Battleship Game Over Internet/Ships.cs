@@ -4,11 +4,12 @@
     {
         public string name { get; protected set; }
         public int length { get; protected set; }
-        protected int hits;
+        public int hits { get; set; }
         public bool isSunk { get { return hits >= length; } }
-        protected VALUE value;
-
-
+        public VALUE value { get; protected set; }
+        public Direction direction { get; set; }
+        public int row { get; set; }
+        public int column { get; set; }
 
     }
 
@@ -20,6 +21,8 @@
             this.length = 3;
             this.hits = 0;
             this.value = VALUE.Submarine;
+            this.direction = Direction.North;
+            
         }
 
     }
@@ -32,6 +35,7 @@
             this.length = 4;
             this.hits = 0;
             this.value = VALUE.Battleship;
+            this.direction = Direction.North;
         }
     }
 
@@ -43,6 +47,7 @@
             this.length = 2;
             this.hits = 0;
             this.value = VALUE.Destroyer;
+            this.direction = Direction.North;
         }
     }
 
@@ -54,6 +59,7 @@
             this.length = 3;
             this.hits = 0;
             this.value = VALUE.Cruiser;
+            this.direction = Direction.North;
         }
 
     }
@@ -66,6 +72,7 @@
             this.length = 5;
             this.hits = 0;
             this.value = VALUE.Carrier;
+            this.direction = Direction.North;
         }
 
     }
