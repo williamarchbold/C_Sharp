@@ -2,11 +2,13 @@
 {
     public abstract class Ships
     {
-        protected string name;
-        protected int length;
+        public string name { get; protected set; }
+        public int length { get; protected set; }
         protected int hits;
         public bool isSunk { get { return hits >= length; } }
         protected VALUE value;
+
+
 
     }
 

@@ -25,7 +25,7 @@ namespace Two_Player_Battleship_Game_Over_Internet
         private int column;
         private VALUE value; 
 
-        public Coordinate(int row, int column)
+        public Coordinate()
         {
             this.row = row;
             this.column = column;
