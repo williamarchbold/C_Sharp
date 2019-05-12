@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,12 +33,12 @@ namespace Two_Player_Battleship_Game_Over_Internet
         private bool _isHost;
         private bool _isMyTurn;
         private int _turnNumber;
-        private TCPConnection _connection;
+        private TCPConnection _connection = new TCPConnection();
 
         static void Main(string[] args)
         {
             var game = new Battleship_Game();
-            game.SetupGame();
+            game.SetupGame().GetAwaiter().GetResult(); //Add GetAwaiter and GetResult to not exit game immediately. Exit safely. 
         }
 
         public Battleship_Game()
@@ -45,57 +46,146 @@ namespace Two_Player_Battleship_Game_Over_Internet
             _myPlayer = new Player();
         }
 
+        private int GetDigit(string purpose)
+        {
+            Console.WriteLine("Please enter a number between 1 and 10 for the {0}", purpose);
+            var potentialDigit = Console.ReadLine();
+            if (int.TryParse(potentialDigit, out var digit) && 0 < digit && digit <= 10)
+            {
+                return digit;
+            }
+
+            return GetDigit(purpose);
+        }
+
+        private PlayerTurnResult _lastHitOnMe;
+
         public async Task SetupGame()
         {
-            Menu(_myPlayer);
-            // de ide if host
-
-            while (!IsOver)
+            while (await Menu(_myPlayer))
             {
-                // play the game
-                if (_isMyTurn)
+                while (!IsOver)
                 {
-                    var turn = new PlayerTurn
+                    // play the game
+                    Console.Clear();
+                    if (_isMyTurn && _lastHitOnMe != null)
                     {
-                        TurnNumber = _turnNumber++,
-                        IsHost = _isHost,
-                        Column = 0,
-                        Row = 0,
-                    };
-                    _turns.Add(_turnNumber, turn);
-                    var result = await  _connection.SendTurn(turn);
-                    _myPlayer.ApplyResult(result);
+                        Console.WriteLine("The last hit was {0}", _lastHitOnMe.Hit ? "a hit!!" : "Sweet a miss!");
+                    }
+                    Console.WriteLine("Your board looks like");
+                    _myPlayer.board.Print_Board();
+                    Console.WriteLine("Your opponents board looks like:");
+                    _myPlayer.opponentsBoard.Print_Board();
+
+                    if (_isMyTurn)
+                    {
+                        Console.WriteLine("Its your turn, please enter a row and column to hit");
+                        var row = GetDigit("Row");
+                        var column = GetDigit("Column");
+
+                        var turn = new PlayerTurn
+                        {
+                            TurnNumber = _turnNumber++,
+                            IsHost = _isHost,
+                            Column = column,
+                            Row = row,
+                        };
+                        //_turns.Add(_turnNumber, turn);
+                        var result = await _connection.SendTurn(turn);
+                        _myPlayer.ApplyResult(turn.Row, turn.Column, result);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Waiting for your opponent to strike!");
+                        // wait for response
+                        var turn = await _connection.OpponentsTurn();
+                        // check to see if valid turn in TCP order
+                        //_turns.Add(turn.TurnNumber, turn);
+                        var result = _lastHitOnMe = _myPlayer.ApplyOpponentsTurn(turn);
+                        _connection.CompleteOpponentsTurn(result);
+
+                        _myPlayer.board.Print_Board();
+                    }
+
+                    _isMyTurn = !_isMyTurn;
+                }
+                if (_myPlayer.IsWinner)
+                {
+                    Console.WriteLine("Game over. You win!");
                 }
                 else
                 {
-                    // wait for response
-                    var turn = await _connection.OpponentsTurn();
-                    // check to see if valid turn in TCP order
-                    _turns.Add(turn.TurnNumber, turn);
-                    var result = _myPlayer.ApplyOpponentsTurn(turn);
-                    _connection.CompleteOpponentsTurn(result);
+                    Console.WriteLine("Game over. You lose!");
                 }
             }
-
-            // Display winner/ loser;
         }
 
         public bool IsOver => _myPlayer.IsOver;
 
 
 
-        public void Menu(Player player)
+        public async Task<bool> Menu(Player player)
         {
-            //Do you want to play a game?
-            //User selects yes or no
-
-            foreach (Ships ship in player.ships)
+            Console.Write("Would you like to play a round of battleship? (y/n): ");
+            var _playGame = char.Parse(Console.ReadLine());
+            if (_playGame == 'n')
             {
-                Place_Ship(player, ship);
+                return false;
             }
 
+            await SetupConnection();
+
+            var i = 0;
+            foreach (Ships ship in player.ships)
+            {
+                //Place_Ship(player, ship);
+                ship.column = i ++;
+                ship.row = 0;
+                ship.direction = Direction.South;
+                player.board.Place_Ship(ship);
+            }
+
+            return true;   
             
-            
+        }
+
+        private async Task SetupConnection()
+        {
+            Console.WriteLine("Do you want to host?");
+            var wantsToHost = DoesWantToHost(Console.ReadLine());
+            if (wantsToHost)
+            {
+                Console.WriteLine("Setting up connection");
+                _isHost = true;
+                _isMyTurn = true;
+                await _connection.Host_Game();
+                return;
+            }
+
+            var addresss = GetIpAddress();
+            await _connection.Join_Game(addresss);
+
+            IPAddress GetIpAddress()
+            {
+                Console.WriteLine("Please enter the IP address of the host");
+                var potentialIpAddress = Console.ReadLine();
+                if (potentialIpAddress.Trim() == string.Empty)
+                {
+                    return IPAddress.Loopback;
+                }
+
+                if (IPAddress.TryParse(potentialIpAddress, out var address)) {
+                    return address;
+                }
+
+                return GetIpAddress();
+            }
+
+            bool DoesWantToHost(string input)
+            {
+                var doesWantTo = new[] { "y", "yes" };
+                return doesWantTo.Contains(input.Trim().ToLowerInvariant());
+            }
         }
 
         static public void Place_Ship(Player player, Ships ship)

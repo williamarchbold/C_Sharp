@@ -20,7 +20,7 @@ namespace Two_Player_Battleship_Game_Over_Internet
 
         private string message;
 
-        /*public async Task Host_Game()
+        public async Task Host_Game()
         {
 
             AddToMessageBox("No listener found, opening listener.");
@@ -30,46 +30,41 @@ namespace Two_Player_Battleship_Game_Over_Internet
             //start listening on port 5555
             listener.Start();
             connection = await listener.AcceptTcpClientAsync();
-            await Task.Factory.StartNew(() => ListenForPacket(connection));
+            Task.Factory.StartNew(() => ListenForPacket(connection));
             //once connection is established, listener stops therefore only allows for 1 conection
             listener.Stop();
             return;
+        }
 
-        }*/
-
-        public async Task Join_Game(string ipAddress)
+        public async Task Join_Game(IPAddress ipAddress)
         {
-
-            if (IPAddress.TryParse(ipAddress, out var address))
+            try
             {
-                try
+                // attempt #3
+                if (ipAddress.Equals(IPAddress.Loopback))
                 {
-                    // attempt #3
-                    if (ipAddress == "127.0.0.1")
-                    {
-                        connection = new TcpClient(Dns.GetHostEntry(Dns.GetHostName()).AddressList.
-                                FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork).ToString(), 5555);
-                    }
-                    else
-                    {
-                        // attempt #1: using 127.0.0.1
-                        connection = new TcpClient(new IPEndPoint(address, 5555));
-                    }
-
+                    connection = new TcpClient(Dns.GetHostEntry(Dns.GetHostName()).AddressList.
+                            FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork).ToString(), 5555);
+                }
+                else
+                {
                     // attempt #1: using 127.0.0.1
-                    //connection = new TcpClient(new IPEndPoint(address, 5555));
-                    // attempt #2: using 127.0.0.1
-                    //connection = new TcpClient();
-                    //connection.Connect(new IPEndPoint(address, 5555));
-                    stream = connection.GetStream();
-                    AddToMessageBox("Listener found, connection successful.");
-                    isHost = false;
-                    //await Task.Factory.StartNew(() => ListenForPacket(connection));
+                    connection = new TcpClient(new IPEndPoint(ipAddress, 5555));
                 }
-                catch (Exception ex)
-                {
-                    connection = null;
-                }
+
+                // attempt #1: using 127.0.0.1
+                //connection = new TcpClient(new IPEndPoint(address, 5555));
+                // attempt #2: using 127.0.0.1
+                //connection = new TcpClient();
+                //connection.Connect(new IPEndPoint(address, 5555));
+                stream = connection.GetStream();
+                AddToMessageBox("Listener found, connection successful.");
+                isHost = false;
+                Task.Factory.StartNew(() => ListenForPacket(connection));
+            }
+            catch (Exception ex)
+            {
+                connection = null;
             }
 
             if (connection == null)
@@ -83,7 +78,7 @@ namespace Two_Player_Battleship_Game_Over_Internet
                 connection = await listener.AcceptTcpClientAsync();
                 stream = connection.GetStream();
                 isHost = true;
-                //await Task.Factory.StartNew(() => ListenForPacket(connection));
+                Task.Factory.StartNew(() => ListenForPacket(connection));
                 //once connection is established, listener stops therefore only allows for 1 conection
                 listener.Stop();
                 return;

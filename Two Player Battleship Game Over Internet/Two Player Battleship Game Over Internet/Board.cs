@@ -54,6 +54,25 @@ namespace Two_Player_Battleship_Game_Over_Internet
             }
         }
 
+        internal void ApplyHitResult(int row, int column, bool hit)
+        {
+            var coordinate = board[row - 1, column - 1];
+            if (hit)
+            {
+                coordinate.WasHit();
+            }
+            else
+            {
+                coordinate.WasMiss();
+            }
+        }
+
+        internal bool ApplyOpponentsTurn(PlayerTurn turn)
+        {
+            var coordinate = board[turn.Row - 1, turn.Column - 1];
+            return coordinate.Hit();
+        }
+
         public bool AllShipsSunk
         {
             get

@@ -16,7 +16,7 @@ namespace Two_Player_Battleship_Game_Over_Internet
         [Description("D")] Destroyer,
         [Description("C")] Cruiser,
         [Description("C")] Carrier,
-        [Description("O")] Ocean,
+        [Description("o")] Ocean,
     }
 
     public class Coordinate
@@ -45,5 +45,32 @@ namespace Two_Player_Battleship_Game_Over_Internet
             return value.GetDescription();
         }
 
+        internal bool Hit()
+        {
+            var hasBeenHit = value == VALUE.Hit || value == VALUE.Miss;
+            if (!hasBeenHit)
+            {
+                if (Is_Occupied)
+                {
+                    value = VALUE.Hit;
+                }
+                else
+                {
+                    value = VALUE.Miss;
+                }
+            }
+
+            return value == VALUE.Hit;
+        }
+
+        internal void WasHit()
+        {
+            value = VALUE.Hit;
+        }
+
+        internal void WasMiss()
+        {
+            value = VALUE.Miss;
+        }
     }
 }

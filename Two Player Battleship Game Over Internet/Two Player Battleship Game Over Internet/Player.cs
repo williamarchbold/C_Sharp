@@ -7,7 +7,7 @@ namespace Two_Player_Battleship_Game_Over_Internet
     {
         public Ships[] ships = new Ships[5];
         public Board board;
-        Board opponentsBoard;
+        public Board opponentsBoard;
 
         public Player()
         {
@@ -17,7 +17,7 @@ namespace Two_Player_Battleship_Game_Over_Internet
             ships[3] = new Cruiser();
             ships[4] = new Carrier();
 
-            var numberOfHits = ships.Sum(s => s.hits);
+            var numberOfHits = ships.Sum(s => s.length);
 
             board = new Board(numberOfHits);
             opponentsBoard = new Board(numberOfHits);
@@ -27,15 +27,14 @@ namespace Two_Player_Battleship_Game_Over_Internet
 
         public bool Is_Loser()
         {
-            return ships[0].isSunk == ships[1].isSunk == ships[2].isSunk == ships[3].isSunk == ships[4].isSunk == ships[5].isSunk == true ? true : false;
+            return ships.All(s => s.isSunk);
         }
 
         public bool IsWinner => opponentsBoard.AllShipsSunk;
 
-        internal void ApplyResult(PlayerTurnResult result)
+        internal void ApplyResult(int row, int column, PlayerTurnResult result)
         {
-            // update opponents board
-            throw new NotImplementedException();
+            opponentsBoard.ApplyHitResult(row, column, result.Hit);
         }
 
         internal PlayerTurnResult ApplyOpponentsTurn(PlayerTurn turn)
@@ -43,7 +42,7 @@ namespace Two_Player_Battleship_Game_Over_Internet
             return new PlayerTurnResult
             {
                 TurnNumber = turn.TurnNumber,
-                Hit = false,
+                Hit = board.ApplyOpponentsTurn(turn),
             };
         }
     }
