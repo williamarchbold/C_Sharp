@@ -124,22 +124,29 @@ namespace Two_Player_Battleship_Game_Over_Internet
 
         public Coordinate Iterate_Directions(Ships ship, int i)
         {
-            switch (ship.direction)
+            try
             {
-                case Direction.North:
-                    return board[ship.row - i, ship.column];
+                switch (ship.direction)
+                {
+                    case Direction.North:
+                        return board[ship.row - i, ship.column];
 
-                case Direction.South:
-                    return board[ship.row + i, ship.column];
+                    case Direction.South:
+                        return board[ship.row + i, ship.column];
 
-                case Direction.East:
-                    return board[ship.row, ship.column + i];
+                    case Direction.East:
+                        return board[ship.row, ship.column + i];
 
-                case Direction.West:
-                    return board[ship.row, ship.column - i];
+                    case Direction.West:
+                        return board[ship.row, ship.column - i];
 
-                default:
-                    return null;
+                    default:
+                        return null;
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return null;
             }
         }
         

@@ -48,7 +48,6 @@
     <Compile Include="Board.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="EnumExtensions.cs" />
-    <Compile Include="Place_Ship_Command.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Battleship_Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,6 +1,6 @@
 ﻿namespace Project___Sudoku
 {
-    partial class Form1
+    partial class SudokuGame
     {
         /// <summary>
         /// Required designer variable.
@@ -200,4 +200,3 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
-

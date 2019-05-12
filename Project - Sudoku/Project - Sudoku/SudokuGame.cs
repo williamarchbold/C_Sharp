@@ -19,12 +19,12 @@ namespace Project___Sudoku
      * 
      * @author William Archbold
      */
-    public partial class Form1 : Form
+    public partial class SudokuGame : Form
     {
 
         private Board board = new Board();
 
-        public Form1()
+        public SudokuGame()
         {
             InitializeComponent();
 

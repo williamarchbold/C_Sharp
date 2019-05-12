@@ -135,14 +135,14 @@ namespace Two_Player_Battleship_Game_Over_Internet
 
             await SetupConnection();
 
-            var i = 0;
+            //var i = 0;
             foreach (Ships ship in player.ships)
             {
-                //Place_Ship(player, ship);
-                ship.column = i ++;
-                ship.row = 0;
-                ship.direction = Direction.South;
-                player.board.Place_Ship(ship);
+                Place_Ship(player, ship);
+                //ship.column = i ++;
+                //ship.row = 0;
+                //ship.direction = Direction.South;
+                //player.board.Place_Ship(ship);
             }
 
             return true;   
