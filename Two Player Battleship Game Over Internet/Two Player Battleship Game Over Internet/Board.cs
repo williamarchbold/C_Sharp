@@ -7,23 +7,7 @@ using System.Threading.Tasks;
 namespace Two_Player_Battleship_Game_Over_Internet
 {
     public class Board
-    {
-        //private List<Coordinate> board;
-
-        /*public Board()
-        {
-           board = new List<Coordinate>();
-            for (int i = 0; i < 10; i++)
-            {
-                for (int j = 0; j < 10; j++)
-                {
-                    board.Add(new Coordinate(i, j));
-                }
-            }
-        }
-        */
-
-        
+    {       
         public Coordinate[,] board;
         private int _numberOfHits;
 
@@ -40,13 +24,30 @@ namespace Two_Player_Battleship_Game_Over_Internet
             }
         }
         
-
         public void Print_Board()
         {
-            for (int row = 0; row < 10; row++)
+            Console.Write("     ");
+            for (int i = 1; i < 11; i++)
             {
+                Console.Write(i + " ");
+            }
+            Console.WriteLine();
+            int _RowTracker = 0;
+            for (int row = 0; row < 10; row++)
+            {                
                 for (int column = 0; column < 10; column++)
                 {
+                    if (column == 0)
+                    {
+                        if (row !=9)
+                        {
+                            Console.Write("  " + (++_RowTracker + "  "));
+                        }
+                        else
+                        {
+                            Console.Write("  " + (++_RowTracker + " "));
+                        }                       
+                    }
                     Console.Write(board[row,column] + " ");
                 }
                 Console.WriteLine();
