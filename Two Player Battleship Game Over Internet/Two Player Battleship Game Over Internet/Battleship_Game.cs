@@ -43,7 +43,7 @@ namespace Two_Player_Battleship_Game_Over_Internet
 
         public Battleship_Game()
         {
-            _myPlayer = new Player();
+            //_myPlayer = new Player();
         }
 
         private int GetDigit(string purpose)
@@ -62,7 +62,7 @@ namespace Two_Player_Battleship_Game_Over_Internet
 
         public async Task SetupGame()
         {
-            while (await Menu(_myPlayer))
+            while (await Menu(_myPlayer = new Player()))
             {
                 while (!IsOver)
                 {
@@ -142,12 +142,12 @@ namespace Two_Player_Battleship_Game_Over_Internet
                 Place_Ship(player, ship);
 
                 //use the below code to have game automatically place ships 
-                
-                /*ship.column = i++;
-                ship.row = 0;
-                ship.direction = Direction.South;
-                player.board.Place_Ship(ship);
-                */
+
+                //ship.column = i++;
+                //ship.row = 0;
+                //ship.direction = Direction.South;
+                //player.board.Place_Ship(ship);
+
             }
 
             return true;   
