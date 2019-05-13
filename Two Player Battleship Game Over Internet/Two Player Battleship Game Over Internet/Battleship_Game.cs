@@ -139,11 +139,15 @@ namespace Two_Player_Battleship_Game_Over_Internet
             var i = 0;
             foreach (Ships ship in player.ships)
             {
-                //Place_Ship(player, ship);
-                ship.column = i++;
+                Place_Ship(player, ship);
+
+                //use the below code to have game automatically place ships 
+                
+                /*ship.column = i++;
                 ship.row = 0;
                 ship.direction = Direction.South;
                 player.board.Place_Ship(ship);
+                */
             }
 
             return true;   
