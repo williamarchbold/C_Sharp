@@ -70,7 +70,7 @@ namespace Two_Player_Battleship_Game_Over_Internet
                     Console.Clear();
                     if (_isMyTurn && _lastHitOnMe != null)
                     {
-                        Console.WriteLine("The last hit was {0}", _lastHitOnMe.Hit ? "a hit!!" : "Sweet a miss!");
+                        Console.WriteLine("The last attack was {0}", _lastHitOnMe.Hit ? "a hit!!" : "Sweet a miss!");
                     }
                     Console.WriteLine("Your board looks like");
                     _myPlayer.board.Print_Board();
@@ -113,10 +113,11 @@ namespace Two_Player_Battleship_Game_Over_Internet
                 {
                     Console.WriteLine("Game over. You win!");
                 }
-                else
-                {
-                    Console.WriteLine("Game over. You lose!");
+                if (_myPlayer.Is_Loser())
+                {                   
+                    Console.WriteLine("Game over. You lose!");                    
                 }
+                
             }
         }
 
@@ -135,14 +136,14 @@ namespace Two_Player_Battleship_Game_Over_Internet
 
             await SetupConnection();
 
-            //var i = 0;
+            var i = 0;
             foreach (Ships ship in player.ships)
             {
-                Place_Ship(player, ship);
-                //ship.column = i ++;
-                //ship.row = 0;
-                //ship.direction = Direction.South;
-                //player.board.Place_Ship(ship);
+                //Place_Ship(player, ship);
+                ship.column = i++;
+                ship.row = 0;
+                ship.direction = Direction.South;
+                player.board.Place_Ship(ship);
             }
 
             return true;   
