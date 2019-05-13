@@ -70,7 +70,7 @@ namespace Two_Player_Battleship_Game_Over_Internet
                     Console.Clear();
                     if (_isMyTurn && _lastHitOnMe != null)
                     {
-                        Console.WriteLine("The last attack was {0}", _lastHitOnMe.Hit ? "a hit!!" : "Sweet a miss!");
+                        Console.WriteLine("The last attack was {0}", _lastHitOnMe.Hit ? "a hit!!" : "a miss!");
                     }
                     Console.WriteLine("Your board looks like");
                     _myPlayer.board.Print_Board();
