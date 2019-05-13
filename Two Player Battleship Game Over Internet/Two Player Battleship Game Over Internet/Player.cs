@@ -23,12 +23,14 @@ namespace Two_Player_Battleship_Game_Over_Internet
             opponentsBoard = new Board(numberOfHits);
         }
 
-        public bool IsOver => Is_Loser() || IsWinner;
+        public bool IsOver => IsLoser/*()*/ || IsWinner;
 
-        public bool Is_Loser()
+        /*public bool IsLoser
         {
             return ships.All(s => s.isSunk);
-        }
+        }*/
+
+        public bool IsLoser => board.AllShipsSunk;
 
         public bool IsWinner => opponentsBoard.AllShipsSunk;
 

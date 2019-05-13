@@ -113,7 +113,7 @@ namespace Two_Player_Battleship_Game_Over_Internet
                 {
                     Console.WriteLine("Game over. You win!");
                 }
-                if (_myPlayer.Is_Loser())
+                if (_myPlayer.IsLoser)
                 {                   
                     Console.WriteLine("Game over. You lose!");                    
                 }
